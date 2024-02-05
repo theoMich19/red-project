@@ -5,9 +5,9 @@ import { previousAttempts } from "~/compnent/common/attemps/attemps";
 import { handleInputChange, handleKeyDown } from "~/utils/game";
 import { readAndUseJsonDico } from "~/utils/dico";
 import { numberToWord } from "~/utils/transform";
+import { dico } from "../../data/dico"
 
 import ModalGame from "~/compnent/modal/modal-game/modal-game";
-
 export const loader = async () => {
   const mots = [
     "amour", "rapide", "soleil", "lune", "étoile",
@@ -24,7 +24,7 @@ export const loader = async () => {
 
   const sizeWord = secretWord.length
   const valueindex: string = numberToWord(sizeWord)
-  const listWords: any = await readAndUseJsonDico('public/data/dico.json');
+  const listWords: any = dico;
   const dicoUsed: Array<string> = listWords[valueindex]
   return { dicoUsed, secretWord };
 };

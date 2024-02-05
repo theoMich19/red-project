@@ -31,6 +31,7 @@ export const loader = async () => {
 
 export default function GameDay() {
   const { dicoUsed, secretWord }: any = useLoaderData()
+  console.log("🚀 ~ GameDay ~ secretWord:", secretWord)
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");
@@ -92,7 +93,7 @@ export default function GameDay() {
           {isInvalidWord && <span className="text-red ">Le mot saisie n'est pas correcte</span>}
           {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
           {isOpen ? (
-            <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} />
+            <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />
           ) : (
             <div className="mt-4 space-x-2">
               {inputs.map((input, index) => (

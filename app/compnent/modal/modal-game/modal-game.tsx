@@ -4,10 +4,12 @@ export default function ModalGame({
   setIsOpen,
   resetGame,
   gameStatus,
+  secretWord
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   resetGame: Function;
   gameStatus: string;
+  secretWord: string
 }) {
   const [progress, setProgress] = useState(0);
   const time = 5 * 10 // 50 * 1000 = 5000 ms
@@ -65,9 +67,12 @@ export default function ModalGame({
               </span>
             )}
             {gameStatus === "lose" && (
-              <span className="text-2xl text-center p-2">
-                Dommage vous aures plus de chance une prochaine fois 😔
-              </span>
+              <div className="flex flex-col">
+                <span className="text-2xl text-center p-2">
+                  Dommage vous aures plus de chance une prochaine fois 😔
+                </span>
+                <span className="text-2xl text-center p-2">Le mot caché était : "{secretWord}"</span>
+              </div>
             )}
             <div className="bg-blue-100 h-2.5 rounded-full w-[50%]">
               <div

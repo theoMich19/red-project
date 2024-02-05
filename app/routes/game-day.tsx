@@ -24,7 +24,7 @@ export const loader = async () => {
 
   const sizeWord = secretWord.length
   const valueindex: string = numberToWord(sizeWord)
-  const listWords: any = await readAndUseJsonDico('app/data/dico.json');
+  const listWords: any = await readAndUseJsonDico('public/data/dico.json');
   const dicoUsed: Array<string> = listWords[valueindex]
   return { dicoUsed, secretWord };
 };

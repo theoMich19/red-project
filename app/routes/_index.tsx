@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 export const meta: MetaFunction = () => {
@@ -12,7 +13,7 @@ export default function Index() {
 
   let navigate = useNavigate();
 
-  UseEffect(() => {
+  useEffect(() => {
     navigate('/home');
   }, [])
 
@@ -46,8 +47,5 @@ export default function Index() {
       </ul>
     </div>
   );
-}
-function UseEffect(arg0: () => void, arg1: never[]) {
-  throw new Error("Function not implemented.");
 }
 

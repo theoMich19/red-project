@@ -10,11 +10,11 @@ import { dico } from "../../data/dico"
 import ModalGame from "~/compnent/modal/modal-game/modal-game";
 export const loader = async () => {
   const mots = [
-    "amour", "rapide", "soleil", "lune", "étoile",
-    "fleur", "oiseau", "rivière", "montagne", "forêt",
-    "voyage", "musique", "silence", "horizon", "liberté",
+    "amour", "rapide", "soleil", "lune", "etoile",
+    "fleur", "oiseau", "riviere", "montagne", "foret",
+    "voyage", "musique", "silence", "horizon", "liberte",
     "courage", "miracle", "histoire", "lumière", "espoir",
-    "Champs"
+    "champs"
   ];
 
   const choisirMotAleatoire = () => mots[Math.floor(Math.random() * mots.length)];

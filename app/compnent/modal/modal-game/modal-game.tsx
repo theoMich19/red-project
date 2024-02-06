@@ -11,31 +11,28 @@ export default function ModalGame({
   gameStatus: string;
   secretWord: string
 }) {
-  const [progress, setProgress] = useState(0);
-  const time = 5 * 10 // 50 * 1000 = 5000 ms
+  const [timeRemaining, setTimeRemaining] = useState(9);
+
   useEffect(() => {
-    setProgress(0);
+    if (timeRemaining > 0) {
+      const timerId = setTimeout(() => {
+        setTimeRemaining(timeRemaining - 1);
+      }, 10000);
 
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        const newProgress = prevProgress + 1;
-        if (newProgress >= 100) {
-          clearInterval(interval);
-          resetGame();
-        }
-        return newProgress;
-      });
-    }, time);
+      return () => clearTimeout(timerId);
+    } else {
+      resetGame()
+    }
+  }, [timeRemaining]);
 
-    return () => clearInterval(interval);
-  }, [gameStatus]);
+  const resultMessage = gameStatus === "won" ? "FÉLICITATIONS, VOUS AVEZ GAGNÉ !" : "Dommage, c'est perdu !"
 
   return (
     <div
       className={`absolute inset-0 backdrop-blur-sm flex items-center modal-animation `}
       onClick={() => resetGame()}
     >
-      <div className="container mx-auto  max-w-fit">
+      <div className="container mx-auto max-w-fit">
         <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
           <button
             className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600"
@@ -61,25 +58,18 @@ export default function ModalGame({
             </svg>
           </button>
           <div className="flex flex-col items-center gap-8">
-            {gameStatus === "won" && (
+            <div className="flex flex-col">
               <span className="text-2xl text-center p-2">
-                FÉLICITATIONS, VOUS AVEZ GAGNÉ!
+                {resultMessage}
               </span>
-            )}
-            {gameStatus === "lose" && (
-              <div className="flex flex-col">
-                <span className="text-2xl text-center p-2">
-                  Dommage vous aures plus de chance une prochaine fois 😔
-                </span>
-                <span className="text-2xl text-center p-2">Le mot caché était : "{secretWord}"</span>
-              </div>
-            )}
-            <div className="bg-blue-100 h-2.5 rounded-full w-[50%]">
-              <div
-                className={`${gameStatus === "won" ? "bg-green-400" : "bg-gray-400"} h-2.5 rounded-full w-[50%]`}
-                style={{ width: `${progress}%` }}
-              ></div>
+              <span className="text-lg text-center p-2">Le mot caché était : </span>
+              <span className="px-4 py-2 border-2 border-gray-600 border-dashed bg-slate-100 w-fit items-center rounded-lg self-center">
+                {secretWord}
+              </span>
             </div>
+            <button className="bg-orange-400 px-4 py-2 text-center rounded-lg hover:bg-orange-300 transition-colors duration-75 ease-in-out text-white font-bold">
+              Rejour dans ... {timeRemaining}
+            </button>
           </div>
         </div>
       </div>

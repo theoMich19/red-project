@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from '@remix-run/react';
 import { previousAttempts } from "~/compnent/common/attemps/attemps";
 
-import { handleInputChange, handleKeyDown } from "~/utils/game";
+import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils/game";
 import { readAndUseJsonDico } from "~/utils/dico";
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
 
 import ModalGame from "~/compnent/modal/modal-game/modal-game";
+import { Keyboard } from "~/compnent/common/keyboard/keyboard";
+import { sendToast } from "~/utils/toast";
 export const loader = async () => {
   const mots = [
     "amour", "rapide", "soleil", "lune", "etoile",
@@ -31,7 +33,6 @@ export const loader = async () => {
 
 export default function GameDay() {
   const { dicoUsed, secretWord }: any = useLoaderData()
-  console.log("🚀 ~ GameDay ~ secretWord:", secretWord)
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");
@@ -43,9 +44,13 @@ export default function GameDay() {
     .map(() => useRef());
 
   const resetGame = () => {
+    setGameStatus("")
     setAllAttemps([])
-    setInputs(Array(secretWord.length).fill(""));
     setIsOpen(false)
+  }
+
+  const actionKeyVirtual = (key: string) => {
+    handleVirtualKeyPress(key, secretWord, inputRefs, inputs, setInputs)
   }
 
   useEffect(() => {
@@ -53,8 +58,8 @@ export default function GameDay() {
       const wordsAttemp = inputs.join("")
 
       if (!dicoUsed.includes(wordsAttemp.toLowerCase())) {
-        console.log("Le mot n'existe pas")
-        setIsInvalidWord(true); // Déclencher 
+        setIsInvalidWord(true);
+        sendToast("error", "Le mot n'existe pas");
         return;
       }
 
@@ -69,6 +74,7 @@ export default function GameDay() {
         const result = isCorrect ? "won" : "lose"
         setGameStatus(result);
         setIsOpen(true);
+        setInputs(Array(secretWord.length).fill(""));
       } else {
         inputRefs[0].current.focus();
       }
@@ -76,43 +82,35 @@ export default function GameDay() {
   }, [inputs, allAttemps, maxAttemps, secretWord.length]);
 
   return (
-    <div className="flex flex-col items-center overflow-x-hidden bg-gray-600 h-full">
-      <div className="flex flex-col items-center w-full mb-[5vh]">
-        <h1
-          className="text-9xl font-bold mb-4"
-          style={{ fontFamily: "Island Moments" }}
-        >
-          Game day
-        </h1>
+
+    <div className="flex flex-col items-center overflow-x-hidden h-full justify-between">
+      <div className="flex flex-col items-center">
+        <span className="p-4 text-lg">
+          Il vous reste : {maxAttemps - allAttemps.length} essai
+        </span>
+        {isInvalidWord && <span className="text-red-400 font-bold">Le mot saisie n'est pas correcte</span>}
+        {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
+        {isOpen && (
+          <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
+        {!gameStatus && (<div className="mt-4 space-x-2 flex ">
+          {inputs.map((input, index) => (
+            <input
+              key={index}
+              type="text"
+              className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
+              style={{ fontFamily: "Oswald" }}
+              minLength={1}
+              maxLength={1}
+              value={input}
+              onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
+              onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
+              ref={inputRefs[index]}
+            />
+          ))}
+        </div>)}
       </div>
-      <div className="px-16 pb-16 bg-white border border-gray-200 rounded-lg shadow">
-        <div className="flex flex-col items-center">
-          <span className="p-4 text-lg">
-            Il vous reste : {maxAttemps - allAttemps.length} essai
-          </span>
-          {isInvalidWord && <span className="text-red ">Le mot saisie n'est pas correcte</span>}
-          {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
-          {isOpen ? (
-            <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />
-          ) : (
-            <div className="mt-4 space-x-2">
-              {inputs.map((input, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className={`w-20 h-20 text-center border bg-slate-50 `}
-                  style={{ fontFamily: "Oswald" }}
-                  minLength={1}
-                  maxLength={1}
-                  value={input}
-                  onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
-                  onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
-                  ref={inputRefs[index]}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden">
+        <Keyboard onKeyPress={actionKeyVirtual} />
       </div>
     </div>
   );

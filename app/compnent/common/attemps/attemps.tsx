@@ -6,7 +6,7 @@ export const previousAttempts = (allAttemps: Array<Array<string>>, secretWord: s
             {attempt.map((letter, letterIndex) => (
                 <div
                     key={letterIndex}
-                    className={`w-20 h-20 flex justify-center items-center rounded-lg shadow-card ${renderInputColor(
+                    className={`max-md:w-12 max-md:h-12 w-14 h-14 flex justify-center items-center rounded-lg shadow-card ${renderInputColor(
                         attempt,
                         letterIndex,
                         secretWord

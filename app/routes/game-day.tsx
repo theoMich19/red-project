@@ -14,7 +14,7 @@ export const loader = async () => {
   const mots = [
     "amour", "rapide", "soleil", "lune", "etoile",
     "fleur", "oiseau", "riviere", "montagne", "foret",
-    "voyage", "musique", "silence", "horizon", "liberte",
+    "voyage", "musique", "silence", "horizon", "liberte",²
     "courage", "miracle", "histoire", "lumière", "espoir",
     "champs"
   ];
@@ -83,7 +83,7 @@ export default function GameDay() {
 
   return (
 
-    <div className="flex flex-col items-center overflow-x-hidden h-full justify-between">
+    <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[#FDF7FF]">
       <div className="flex flex-col items-center">
         <span className="p-4 text-lg">
           Il vous reste : {maxAttemps - allAttemps.length} essai

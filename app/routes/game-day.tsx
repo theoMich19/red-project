@@ -7,17 +7,15 @@ import { readAndUseJsonDico } from "~/utils/dico";
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
 
-import ModalGame from "~/compnent/modal/modal-game/modal-game";
+import ModalGame from "~/compnent/modal/modal-game";
 import { Keyboard } from "~/compnent/common/keyboard/keyboard";
 import { sendToast } from "~/utils/toast";
 export const loader = async () => {
   const mots = [
-    "amour", "rapide", "soleil", "lune", "etoile",
-    "fleur", "oiseau", "riviere", "montagne", "foret",
-    "voyage", "musique", "silence", "horizon", "liberte",
-    "courage", "miracle", "histoire", "lumière", "espoir",
-    "champs"
-  ];
+    "pomme", "livre", "chat", "chien", "porte", "verre", "lune", "sole", "plage",
+    "sable", "rouge", "bleu", "vert", "noir", "blanc", "jaune", "gris", "vin", "pain", "eau"
+  ]
+
 
   const choisirMotAleatoire = () => mots[Math.floor(Math.random() * mots.length)];
 

@@ -14,7 +14,7 @@ export const loader = async () => {
   const mots = [
     "amour", "rapide", "soleil", "lune", "etoile",
     "fleur", "oiseau", "riviere", "montagne", "foret",
-    "voyage", "musique", "silence", "horizon", "liberte",²
+    "voyage", "musique", "silence", "horizon", "liberte",
     "courage", "miracle", "histoire", "lumière", "espoir",
     "champs"
   ];

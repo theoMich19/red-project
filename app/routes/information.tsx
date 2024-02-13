@@ -10,17 +10,17 @@ export default function Information() {
 
     return (
         <LayoutPage>
-            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover h-full justify-center gap-8">
+            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8">
                 <div
                     className="cursor-pointer perspective"
                     onClick={() => setFlipped(!flipped)}
                 >
                     <div className={`relative  min-w-[400px] min-h-[400px] transition-transform duration-700 preserve-3d ${flipped ? 'rotate-y-180' : ''}`}>
                         <div className="absolute backface-hidden w-full h-full bg-white rounded-lg p-8 flex items-center justify-center text-dark gap-4 text-md">
-                            <h1 className="text-dark text-lg">Information</h1>
+                            <h1 className="text-dark text-2lg font-bold">Information</h1>
                         </div>
                         <div className="absolute rotate-y-180 backface-hidden w-full h-full p-8 bg-white rounded-lg flex flex-col items-center text-dark gap-4 text-md">
-                            <h1 className="text-lg">Enigmatique</h1>
+                            <h1 className="text-2lg font-bold">Enigmatique</h1>
                             <p>C'est un jeu captivant où l'objectif est de dévoiler un mot mystérieusement dissimulé. Pour ce faire, le joueur doit soumettre un mot de même longueur. Attention le nombre d'essaie est limité.
                                 <br /><br />Plongez dans cette aventure ludique où la déduction et la perspicacité vous mèneront à la découverte du mot énigmatique.</p>
                         </div>
@@ -32,26 +32,22 @@ export default function Information() {
                 >
                     <div className={`relative  min-w-[400px] min-h-[400px] transition-transform duration-700 preserve-3d ${flippedS ? 'rotate-y-180' : ''}`}>
                         <div className="absolute backface-hidden w-full h-full bg-white rounded-lg p-8 flex items-center justify-center text-dark gap-4 text-md">
-                            <h1 className="text-dark text-lg">Comment jouer</h1>
+                            <h1 className="text-dark text-2lg font-bold">Comment jouer</h1>
                         </div>
                         <div className="absolute rotate-y-180 backface-hidden w-full h-full p-8 bg-white rounded-lg flex flex-col items-center text-dark gap-4 text-md">
-                            <h1 className="text-lg">Comment jouer</h1>
-                            <span>Une fois un mot saisie.</span>
+                            <h1 className="text-2lg font-bold">Comment jouer</h1>
+                            <span className="text-left">Une fois un mot saisie :</span>
                             <ul>
                                 <li>
-                                    <span className="bg-gray-200 rounded-lg p-1 text-white">
-                                        GRIS
-                                    </span>,
-                                    si la lettre ne fait pas partie du mot secret
+                                    <span className="bg-gray-200 rounded-lg p-1 font-bold text-white">GRIS</span>
+                                    , si la lettre ne fait pas partie du mot secret
                                 </li>
                                 <li>
-                                    <span className="bg-orange-200 rounded-lg p-1">ORANGE
-                                    </span>
+                                    <span className="bg-orange-200 rounded-lg p-1 font-bold">ORANGE</span>
                                     , si la lettre fait partie du mot secret mais n'est pas positionnée correctement
                                 </li>
                                 <li>
-                                    <span className="bg-green-200 rounded-lg p-1 ">VERT
-                                    </span>
+                                    <span className="bg-green-200 rounded-lg p-1 font-bold ">VERT</span>
                                     , si la lettre fait partie du mot secret et est positionnée correctement
                                 </li>
                             </ul>

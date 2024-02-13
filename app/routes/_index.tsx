@@ -16,7 +16,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover h-full justify-center">
+    <div className="flex flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center">
       <div className="flex flex-col items-center w-full mb-[5vh]">
         <h1 className="text-9xl font-bold mb-4" style={{ fontFamily: "Island Moments" }}>Enigmatique</h1>
       </div>

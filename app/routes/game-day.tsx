@@ -82,28 +82,29 @@ export default function GameDay() {
 
   return (
     <LayoutPage>
-      <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover ">
-        <div className="flex flex-col items-center mt-10">
-          {isInvalidWord && <span className="text-red-400 font-bold">Le mot saisie n'est pas correcte</span>}
+      <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center">
+        <div className="flex flex-col items-center mt-16">
           {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
           {isOpen && (
             <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
-          {!gameStatus && (<div className="mt-4 space-x-2 flex ">
-            {inputs.map((input, index) => (
-              <input
-                key={index}
-                type="text"
-                className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
-                style={{ fontFamily: "Oswald" }}
-                minLength={1}
-                maxLength={1}
-                value={input}
-                onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
-                onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
-                ref={inputRefs[index]}
-              />
-            ))}
-          </div>)}
+          {!gameStatus && (
+            <div className="mt-4 space-x-2 flex">
+              {inputs.map((input, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
+                  style={{ fontFamily: "Oswald" }}
+                  minLength={1}
+                  maxLength={1}
+                  value={input}
+                  onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
+                  onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
+                  ref={inputRefs[index]}
+                />
+              ))}
+            </div>)}
+          {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisie n'est pas correcte</span>}
         </div>
         <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden">
           <Keyboard onKeyPress={actionKeyVirtual} />

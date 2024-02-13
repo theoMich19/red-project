@@ -28,10 +28,11 @@ export default {
         "4xl": "36px",
       },
       backgroundColor: {
-        primary: "#FFFFFF", // blanc
-        secondary: "#FAFAFA", // gris/blanc
+        primary: "#FDF7FF", // beige
+        secondary: "#575366", // gray
         accent: "#525252", // dark
         destructive: "#de392a", // rouge
+        validation: "#20BF55", // green
       },
       colors: {
         primary: "#525252",
@@ -39,21 +40,6 @@ export default {
         accent: "",
         destructive: "#de392a",
         statusGood: "#AACB58", // not a good practice more general
-      },
-      // not good
-      keyframes: {
-        translatingUp: {
-          "0%": { transform: "translateY(10%)" },
-          "100%": { transform: "translateY(0%)" },
-        },
-        spin: {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(360deg)" },
-        },
-      },
-      animation: {
-        "translate-up": "translatingUp 0.5s linear 1",
-        loading: "spin 3s linear infinite",
       },
     },
   },

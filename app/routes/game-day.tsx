@@ -10,6 +10,7 @@ import { dico } from "../../data/dico"
 import ModalGame from "~/compnent/modal/modal-game";
 import { Keyboard } from "~/compnent/common/keyboard/keyboard";
 import { sendToast } from "~/utils/toast";
+import LayoutPage from "~/compnent/common/pageLayout";
 export const loader = async () => {
   const mots = [
     "pomme", "livre", "chat", "chien", "porte", "verre", "lune", "sole", "plage",
@@ -57,7 +58,7 @@ export default function GameDay() {
 
       if (!dicoUsed.includes(wordsAttemp.toLowerCase())) {
         setIsInvalidWord(true);
-        sendToast("error", "Le mot n'existe pas");
+        sendToast({ type: "error", message: "Le mot n'existe pas", duration: 2000 });
         return;
       }
 
@@ -80,36 +81,34 @@ export default function GameDay() {
   }, [inputs, allAttemps, maxAttemps, secretWord.length]);
 
   return (
-
-    <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[#FDF7FF]">
-      <div className="flex flex-col items-center">
-        <span className="p-4 text-lg">
-          Il vous reste : {maxAttemps - allAttemps.length} essai
-        </span>
-        {isInvalidWord && <span className="text-red-400 font-bold">Le mot saisie n'est pas correcte</span>}
-        {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
-        {isOpen && (
-          <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
-        {!gameStatus && (<div className="mt-4 space-x-2 flex ">
-          {inputs.map((input, index) => (
-            <input
-              key={index}
-              type="text"
-              className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
-              style={{ fontFamily: "Oswald" }}
-              minLength={1}
-              maxLength={1}
-              value={input}
-              onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
-              onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
-              ref={inputRefs[index]}
-            />
-          ))}
-        </div>)}
+    <LayoutPage>
+      <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover ">
+        <div className="flex flex-col items-center mt-10">
+          {isInvalidWord && <span className="text-red-400 font-bold">Le mot saisie n'est pas correcte</span>}
+          {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
+          {isOpen && (
+            <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
+          {!gameStatus && (<div className="mt-4 space-x-2 flex ">
+            {inputs.map((input, index) => (
+              <input
+                key={index}
+                type="text"
+                className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
+                style={{ fontFamily: "Oswald" }}
+                minLength={1}
+                maxLength={1}
+                value={input}
+                onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
+                onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
+                ref={inputRefs[index]}
+              />
+            ))}
+          </div>)}
+        </div>
+        <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden">
+          <Keyboard onKeyPress={actionKeyVirtual} />
+        </div>
       </div>
-      <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden">
-        <Keyboard onKeyPress={actionKeyVirtual} />
-      </div>
-    </div>
+    </LayoutPage>
   );
 }

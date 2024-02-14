@@ -20,8 +20,8 @@ export const loader = async () => {
 
   const choisirMotAleatoire = () => mots[Math.floor(Math.random() * mots.length)];
 
-  // const secretWord = choisirMotAleatoire().toUpperCase(); // récupérer via la bdd (généré par chatgpt à la fin)
-  const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
+  const secretWord = choisirMotAleatoire().toUpperCase(); // récupérer via la bdd (généré par chatgpt à la fin)
+  // const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
 
   const sizeWord = secretWord.length
   const valueindex: string = numberToWord(sizeWord)

@@ -32,6 +32,7 @@ export const loader = async () => {
 
 export default function GameDay() {
   const { dicoUsed, secretWord }: any = useLoaderData()
+  console.log("🚀 ~ GameDay ~ secretWord:", secretWord)
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");
@@ -78,7 +79,7 @@ export default function GameDay() {
         inputRefs[0].current.focus();
       }
     }
-  }, [inputs, allAttemps, maxAttemps, secretWord.length]);
+  }, [inputs]);
 
   return (
     <LayoutPage>

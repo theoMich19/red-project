@@ -17,7 +17,7 @@ export default function ModalGame({
     if (timeRemaining > 0) {
       const timerId = setTimeout(() => {
         setTimeRemaining(timeRemaining - 1);
-      }, 10000);
+      }, 100);
 
       return () => clearTimeout(timerId);
     } else {
@@ -68,7 +68,7 @@ export default function ModalGame({
               </span>
             </div>
             <button className="bg-orange-400 px-4 py-2 text-center rounded-lg hover:bg-orange-300 transition-colors duration-75 ease-in-out text-white font-bold">
-              Rejour dans ... {timeRemaining}
+              Rejour
             </button>
           </div>
         </div>

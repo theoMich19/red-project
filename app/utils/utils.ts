@@ -1,33 +1,35 @@
-// Nouvelle fonction pour calculer les couleurs de fond en prenant en compte les règles supplémentaires
 export const renderInputColor = (
   wordsAttempt: Array<string>,
   index: number,
   secretWord: any
 ) => {
   const letter = wordsAttempt[index];
-  const secretOccurrences = secretWord.split("").reduce((acc: any, l: any) => {
+  let secretOccurrences = secretWord.split("").reduce((acc: any, l: any) => {
     acc[l] = (acc[l] || 0) + 1;
     return acc;
   }, {});
 
-  // Marquer les lettres correctement positionnées en premier
+  let colors = wordsAttempt.map(() => "bg-gray-300");
+
+  // Première passe : identifier les lettres correctement positionnées
   wordsAttempt.forEach((attemptLetter, attemptIndex) => {
     if (attemptLetter === secretWord[attemptIndex]) {
+      colors[attemptIndex] = "bg-green-200";
       secretOccurrences[attemptLetter]--;
     }
   });
 
-  if (letter === secretWord[index]) {
-    return "bg-green-200"; // Lettre correcte et bien positionnée
-  } else if (
-    letter &&
-    secretWord.includes(letter) &&
-    secretOccurrences[letter] > 0
-  ) {
-    // Décrémenter l'occurrence puisque la lettre est présente mais mal positionnée
-    secretOccurrences[letter]--;
-    return "bg-orange-200"; // Lettre correcte mais mal positionnée
-  } else {
-    return "bg-gray-300"; // Lettre incorrecte
-  }
+  // Deuxième passe : identifier les lettres mal positionnées
+  wordsAttempt.forEach((attemptLetter, attemptIndex) => {
+    if (
+      secretWord.includes(attemptLetter) &&
+      secretOccurrences[attemptLetter] > 0 &&
+      colors[attemptIndex] !== "bg-green-200"
+    ) {
+      colors[attemptIndex] = "bg-orange-200";
+      secretOccurrences[attemptLetter]--;
+    }
+  });
+
+  return colors[index];
 };

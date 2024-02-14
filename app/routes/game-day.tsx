@@ -20,8 +20,8 @@ export const loader = async () => {
 
   const choisirMotAleatoire = () => mots[Math.floor(Math.random() * mots.length)];
 
-  const secretWord = choisirMotAleatoire().toUpperCase(); // récupérer via la bdd (généré par chatgpt à la fin)
-  // const secretWord = "RARE" // récupérer via la bdd (généré par chatgpt à la fin)
+  // const secretWord = choisirMotAleatoire().toUpperCase(); // récupérer via la bdd (généré par chatgpt à la fin)
+  const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
 
   const sizeWord = secretWord.length
   const valueindex: string = numberToWord(sizeWord)
@@ -32,7 +32,6 @@ export const loader = async () => {
 
 export default function GameDay() {
   const { dicoUsed, secretWord }: any = useLoaderData()
-  console.log("🚀 ~ GameDay ~ secretWord:", secretWord)
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");

@@ -25,7 +25,7 @@ const Navbar = () => {
                     {
                         true ?
                             (
-                                <Link to={"/login"} className={`px-4 py-4 ${isProfileOpen ? "text-gray-500" : ""}`}>Se connecter</Link>
+                                <Link to={"/login"} className="px-4 py-2 hover:bg-gray-700 rounded">Se connecter</Link>
 
                             ) :
                             (

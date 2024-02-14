@@ -31,7 +31,7 @@ export const loader = async () => {
 };
 
 export default function GameDay() {
-  const { dicoUsed, secretWord }: any = useLoaderData()
+  const { dicoUsed, secretWord }: { dicoUsed: Array<string>, secretWord: string } = useLoaderData()
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");
@@ -88,7 +88,7 @@ export default function GameDay() {
           {isOpen && (
             <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
           {!gameStatus && (
-            <div className="mt-4 space-x-2 flex">
+            <div className="space-x-2 flex">
               {inputs.map((input, index) => (
                 <input
                   key={index}
@@ -106,7 +106,7 @@ export default function GameDay() {
             </div>)}
           {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisie n'est pas correcte</span>}
         </div>
-        <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden">
+        <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden backdrop-filter backdrop-blur-sm">
           <Keyboard onKeyPress={actionKeyVirtual} />
         </div>
       </div>

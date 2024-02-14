@@ -1,4 +1,3 @@
-import { KeyButton } from "./keyboard-button";
 
 export const Keyboard = ({ onKeyPress }: { onKeyPress: any }) => {
     const keys = [
@@ -6,30 +5,37 @@ export const Keyboard = ({ onKeyPress }: { onKeyPress: any }) => {
         ['Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M'],
         ['W', 'X', 'C', 'V', 'B', 'N'],
     ];
+    const btnStyle = "h-10 rounded-lg bg-white hover:bg-slate-400"
 
     return (
         <>
             <div className="flex justify-around gap-4 my-2">
                 {'AZERTYUIOP'.split('').map((key) => (
-                    <KeyButton key={key} keyLabel={key} onKeyPress={onKeyPress} />
+                    <button key={key} className={`${btnStyle} w-10`} onClick={() => onKeyPress(key)}>
+                        {key}
+                    </button>
                 ))}
             </div>
             <div className="flex justify-around gap-4 my-2">
                 {'QSDFGHJKLM'.split('').map((key) => (
-                    <KeyButton key={key} keyLabel={key} onKeyPress={onKeyPress} />
+                    <button key={key} className={`${btnStyle} w-10`} onClick={() => onKeyPress(key)}>
+                        {key}
+                    </button>
                 ))}
             </div>
             <div className="flex justify-around gap-4 my-2">
-                <button className="h-10 w-20 rounded-lg bg-slate-400 hover:bg-slate-600" onClick={() => onKeyPress('reset')}>
+                <button className={`${btnStyle} w-20`} onClick={() => onKeyPress('reset')}>
                     Reset
                 </button>
                 {'WXCVBN'.split('').map((key) => (
-                    <KeyButton key={key} keyLabel={key} onKeyPress={onKeyPress} />
+                    <button key={key} className={`${btnStyle} w-10`} onClick={() => onKeyPress(key)}>
+                        {key}
+                    </button>
                 ))}
-                <button className="h-10 w-20 rounded-lg bg-slate-400 hover:bg-slate-600" onClick={() => onKeyPress('del')}>
+                <button className={`${btnStyle} w-20`} onClick={() => onKeyPress('del')}>
                     Del
                 </button>
-            </div>
+            </div >
         </>
     );
 };

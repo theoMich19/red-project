@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from '@remix-run/react';
-import { previousAttempts } from "~/compnent/common/attemps/attemps";
+import { PreviousAttempts, RemainingAttempts } from "~/compnent/common/attemps/attemps";
 
 import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils/game";
 import { readAndUseJsonDico } from "~/utils/dico";
@@ -11,16 +11,20 @@ import ModalGame from "~/compnent/modal/modal-game";
 import { Keyboard } from "~/compnent/common/keyboard/keyboard";
 import { sendToast } from "~/utils/toast";
 import LayoutPage from "~/compnent/common/pageLayout";
-export const loader = async () => {
+
+const getWords = () => {
   const mots = [
     "pomme", "livre", "chat", "chien", "porte", "verre", "lune", "sole", "plage",
-    "sable", "rouge", "bleu", "vert", "noir", "blanc", "jaune", "gris", "vin", "pain", "eau"
+    "sable", "rouge", "bleu", "vert", "noir", "blanc", "jaune", "gris"
   ]
 
+  const words = mots[Math.floor(Math.random() * mots.length)];
 
-  const choisirMotAleatoire = () => mots[Math.floor(Math.random() * mots.length)];
+  return words.toUpperCase()
+}
 
-  const secretWord = choisirMotAleatoire().toUpperCase(); // récupérer via la bdd (généré par chatgpt à la fin)
+export const loader = async () => {
+  const secretWord = getWords() // récupérer via la bdd (généré par chatgpt à la fin)
   // const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
 
   const sizeWord = secretWord.length
@@ -31,11 +35,10 @@ export const loader = async () => {
 };
 
 export default function GameDay() {
-  const { dicoUsed, secretWord }: { dicoUsed: Array<string>, secretWord: string } = useLoaderData()
+  let { dicoUsed, secretWord }: { dicoUsed: Array<string>, secretWord: string } = useLoaderData()
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
   const [gameStatus, setGameStatus] = useState<string>("");
-  const [maxAttemps] = useState<number>(secretWord.length);
   const [inputs, setInputs] = useState(Array(secretWord.length).fill(""));
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const inputRefs: any = Array(secretWord.length)
@@ -69,7 +72,7 @@ export default function GameDay() {
         (input, index) => input === secretWord[index]
       );
 
-      if (isCorrect || allAttemps.length + 1 === maxAttemps) {
+      if (isCorrect || allAttemps.length + 1 === secretWord.length) {
         const result = isCorrect ? "won" : "lose"
         setGameStatus(result);
         setIsOpen(true);
@@ -82,18 +85,17 @@ export default function GameDay() {
 
   return (
     <LayoutPage>
+      {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
       <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center">
         <div className="flex flex-col items-center mt-16">
-          {allAttemps.length > 0 && <div>{previousAttempts(allAttemps, secretWord)}</div>}
-          {isOpen && (
-            <ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
+          <PreviousAttempts allAttemps={allAttemps} secretWord={secretWord} />
           {!gameStatus && (
-            <div className="space-x-2 flex">
+            <div className="space-x-2 flex mt-2">
               {inputs.map((input, index) => (
                 <input
                   key={index}
                   type="text"
-                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-slate-200 `}
+                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-white  `}
                   style={{ fontFamily: "Oswald" }}
                   minLength={1}
                   maxLength={1}
@@ -104,9 +106,14 @@ export default function GameDay() {
                 />
               ))}
             </div>)}
-          {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisie n'est pas correcte</span>}
+          {
+            secretWord.length - allAttemps.length - 1 > 0 &&
+            <RemainingAttempts remainingAttempts={secretWord.length - allAttemps.length - 1} wordLength={secretWord.length} />
+          }
+
+          {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisie n'existe pas dans le dictionnaire</span>}
         </div>
-        <div className="my-8 p-4 border border-gray-400 rounded-sm max-md:hidden backdrop-filter backdrop-blur-sm">
+        <div className="my-8 p-4 border rounded-lg max-md:hidden backdrop-filter backdrop-blur-sm">
           <Keyboard onKeyPress={actionKeyVirtual} />
         </div>
       </div>

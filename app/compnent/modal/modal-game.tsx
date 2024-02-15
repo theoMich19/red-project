@@ -11,29 +11,29 @@ export default function ModalGame({
   gameStatus: string;
   secretWord: string
 }) {
-  const [timeRemaining, setTimeRemaining] = useState(9);
+  // const [timeRemaining, setTimeRemaining] = useState(9);
 
-  useEffect(() => {
-    if (timeRemaining > 0) {
-      const timerId = setTimeout(() => {
-        setTimeRemaining(timeRemaining - 1);
-      }, 100);
+  // useEffect(() => {
+  //   if (timeRemaining > 0) {
+  //     const timerId = setTimeout(() => {
+  //       setTimeRemaining(timeRemaining - 1);
+  //     }, 100);
 
-      return () => clearTimeout(timerId);
-    } else {
-      resetGame()
-    }
-  }, [timeRemaining]);
+  //     return () => clearTimeout(timerId);
+  //   } else {
+  //     resetGame()
+  //   }
+  // }, [timeRemaining]);
 
   const resultMessage = gameStatus === "won" ? "FÉLICITATIONS, VOUS AVEZ GAGNÉ !" : "Dommage, c'est perdu !"
 
   return (
     <div
-      className={`absolute inset-0 backdrop-blur-sm flex items-center modal-animation `}
+      className={`absolute inset-0 backdrop-blur-sm flex items-center modal-animation  z-50`}
       onClick={() => resetGame()}
     >
       <div className="container mx-auto max-w-fit">
-        <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+        <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded-lg border border-gray-400">
           <button
             className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600"
             aria-label="close modal"
@@ -68,7 +68,7 @@ export default function ModalGame({
               </span>
             </div>
             <button className="bg-orange-400 px-4 py-2 text-center rounded-lg hover:bg-orange-300 transition-colors duration-75 ease-in-out text-white font-bold">
-              Rejour
+              Rejouer
             </button>
           </div>
         </div>

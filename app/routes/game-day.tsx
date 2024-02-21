@@ -14,7 +14,7 @@ import LayoutPage from "~/compnent/common/pageLayout";
 
 const getWords = () => {
   const mots = [
-    'liberte', 'desert', 'voyage', 'reve', 'chanson', 'jardin', 'ordinateur', 'esperance', 'sol', 'foret', 'soleil', 'lampe', 'musique', 'ocean', 'bateau', 'amour', 'mur', 'montre', 'plafond', 'plage', 'train', 'ville', 'etoile', 'ciel', 'fleur', 'fenetre', 'avion', 'tableau', 'riviere', 'route', 'vallee', 'lumiere', 'livre', 'billet', 'chapeau', 'voiture', 'table', 'chaise', 'harmonie', 'bureau', 'maison', 'plaine', 'escalier', 'animal', 'couloir', 'hotel', 'toit', 'montagne', 'chateau', 'sourire', 'poesie', 'pont', 'porte'
+    'desert', 'voyage', 'reve', 'jardin', 'sol', 'foret', 'soleil', 'lampe', 'ocean', 'bateau', 'amour', 'mur', 'montre', 'plage', 'train', 'ville', 'etoile', 'ciel', 'fleur', 'avion', 'route', 'vallee', 'livre', 'billet', 'table', 'chaise', 'bureau', 'maison', 'plaine', 'animal', 'hotel', 'toit', 'poesie', 'pont', 'porte'
   ];
   const words = mots[Math.floor(Math.random() * mots.length)];
 

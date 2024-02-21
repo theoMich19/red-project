@@ -3,7 +3,6 @@ import { useLoaderData } from '@remix-run/react';
 import { PreviousAttempts, RemainingAttempts } from "~/compnent/common/attemps/attemps";
 
 import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils/game";
-import { readAndUseJsonDico } from "~/utils/dico";
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
 
@@ -13,24 +12,20 @@ import { sendToast } from "~/utils/toast";
 import LayoutPage from "~/compnent/common/pageLayout";
 
 const getWords = () => {
+  // "pomme", "livre", "chat", "chien", "porte", "verre", "lune", "sole", "plage", "sable", "rouge", "bleu", "vert", "noir", "blanc", "jaune", "gris", 
+
   const mots = [
-    "pomme", "livre", "chat", "chien", "porte", "verre", "lune", "sole", "plage",
-    "sable", "rouge", "bleu", "vert", "noir", "blanc", "jaune", "gris"
-  ]
-
-  const words = mots[Math.floor(Math.random() * mots.length)];
-
-  return words.toUpperCase()
+    'liberte', 'desert', 'voyage', 'reve', 'chanson', 'jardin', 'ordinateur', 'esperance', 'sol', 'foret', 'soleil', 'lampe', 'musique', 'ocean', 'bateau', 'amour', 'mur', 'montre', 'plafond', 'plage', 'train', 'ville', 'etoile', 'ciel', 'fleur', 'fenetre', 'avion', 'tableau', 'riviere', 'route', 'vallee', 'lumiere', 'livre', 'billet', 'chapeau', 'voiture', 'table', 'chaise', 'harmonie', 'bureau', 'maison', 'plaine', 'escalier', 'animal', 'couloir', 'hotel', 'toit', 'montagne', 'chateau', 'sourire', 'poesie', 'pont', 'porte'
+  ];
+  return mots[Math.floor(Math.random() * mots.length)].toUpperCase();
 }
+
 
 export const loader = async () => {
   const secretWord = getWords() // récupérer via la bdd (généré par chatgpt à la fin)
   // const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
-
-  const sizeWord = secretWord.length
-  const valueindex: string = numberToWord(sizeWord)
-  const listWords: any = dico;
-  const dicoUsed: Array<string> = listWords[valueindex]
+  const valueindex: any = numberToWord(secretWord.length)
+  const dicoUsed: Array<string> = dico[valueindex]
   return { dicoUsed, secretWord };
 };
 
@@ -55,8 +50,8 @@ export default function GameDay() {
     handleVirtualKeyPress(key, secretWord, inputRefs, inputs, setInputs)
   }
 
-  useEffect(() => {
-    if (inputs.every((input) => input !== " " && input !== "")) {
+  const checkWordsInput = () => {
+    if (inputs.every((input) => input !== " " && input !== "") && !secretWord) {
       const wordsAttemp = inputs.join("")
 
       if (!dicoUsed.includes(wordsAttemp.toLowerCase())) {
@@ -81,6 +76,10 @@ export default function GameDay() {
         inputRefs[0].current.focus();
       }
     }
+  }
+
+  useEffect(() => {
+    checkWordsInput()
   }, [inputs]);
 
   return (
@@ -95,7 +94,7 @@ export default function GameDay() {
                 <input
                   key={index}
                   type="text"
-                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-white  `}
+                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-white`}
                   style={{ fontFamily: "Oswald" }}
                   minLength={1}
                   maxLength={1}

@@ -12,6 +12,7 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SpeedInsights } from "@vercel/speed-insights/remix"
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -33,6 +34,7 @@ export default function App() {
       </head>
       <body>
         <Analytics />
+        <SpeedInsights />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

@@ -2,7 +2,7 @@ import { renderInputColor } from "~/utils/utils";
 
 export const PreviousAttempts = ({ allAttemps, secretWord }: { allAttemps: Array<Array<string>>, secretWord: string }) => {
     return (
-        <div>
+        <>
             {allAttemps.map((attempt, attemptIndex) => (
                 <div key={attemptIndex} className="flex mt-2 space-x-2">
                     {attempt.map((letter, letterIndex) => (
@@ -24,7 +24,7 @@ export const PreviousAttempts = ({ allAttemps, secretWord }: { allAttemps: Array
                     ))}
                 </div>
             ))}
-        </div>
+        </>
     );
 };
 

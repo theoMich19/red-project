@@ -21,6 +21,8 @@ const Navbar = () => {
                 </button>
                 <div className="hidden lg:flex space-x-4 items-center">
                     <Link to={'/game-day'} className="px-4 py-2 hover:bg-gray-700 rounded">Game-Day</Link>
+                    <Link to={'/game-list'} className="px-4 py-2 hover:bg-gray-700 rounded">More games</Link>
+                    {/* <Link to={'/time-attack'} className="px-4 py-2 hover:bg-gray-700 rounded">time-attack</Link> */}
                     <Link to={"/information"} className="px-4 py-2 hover:bg-gray-700 rounded">Information</Link>
                     {
                         true ?

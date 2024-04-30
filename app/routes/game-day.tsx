@@ -1,120 +1,58 @@
-import { useEffect, useRef, useState } from "react";
-import { useLoaderData } from '@remix-run/react';
-import { PreviousAttempts, RemainingAttempts } from "~/compnent/common/attemps/attemps";
-
-import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils/game";
-import { readAndUseJsonDico } from "~/utils/dico";
+import { useState } from "react";
+import { Link, useLoaderData } from '@remix-run/react';
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
-
 import ModalGame from "~/compnent/modal/modal-game";
-import { Keyboard } from "~/compnent/common/keyboard/keyboard";
-import { sendToast } from "~/utils/toast";
 import LayoutPage from "~/compnent/common/pageLayout";
+import GameBoard from "~/compnent/game/game-board";
 
-const getWords = () => {
-  const mots = [
-    'desert', 'voyage', 'reve', 'jardin', 'sol', 'foret', 'soleil', 'lampe', 'ocean', 'bateau', 'amour', 'mur', 'montre', 'plage', 'train', 'ville', 'etoile', 'ciel', 'fleur', 'avion', 'route', 'vallee', 'livre', 'billet', 'table', 'chaise', 'bureau', 'maison', 'plaine', 'animal', 'hotel', 'toit', 'poesie', 'pont', 'porte'
-  ];
-  const words = mots[Math.floor(Math.random() * mots.length)];
-
-  return words.toUpperCase()
-}
+interface useLoaderDataType { dicoUsed: Array<string>, secretWord: string, isWordFound: boolean }
 
 export const loader = async () => {
-  const secretWord = getWords() // récupérer via la bdd (généré par chatgpt à la fin)
-  // const secretWord = "SERPENTS" // récupérer via la bdd (généré par chatgpt à la fin)
-
+  // TODO : récup info joueur
+  // TODO : récup mot bdd by chatgpt
+  // TODO : récup dico  xxx good xxx
+  const isWordFound = false;
+  let res = await fetch(`${process.env.REST_URL_API}/wordsDay`);
+  const data = await res.json();
+  const secretWord = data[0].value.toUpperCase();
   const sizeWord = secretWord.length
-  const valueindex: string = numberToWord(sizeWord)
+  const valueindex = numberToWord(sizeWord) as string
   const listWords: any = dico;
   const dicoUsed: Array<string> = listWords[valueindex]
-  return { dicoUsed, secretWord };
+  return { dicoUsed, secretWord, isWordFound };
 };
 
 export default function GameDay() {
-  let { dicoUsed, secretWord }: { dicoUsed: Array<string>, secretWord: string } = useLoaderData()
-  const [isInvalidWord, setIsInvalidWord] = useState(false);
-  const [allAttemps, setAllAttemps] = useState<Array<Array<string>>>([]);
+  let { dicoUsed, secretWord, isWordFound }: useLoaderDataType = useLoaderData()
   const [gameStatus, setGameStatus] = useState<string>("");
-  const [inputs, setInputs] = useState(Array(secretWord.length).fill(""));
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const inputRefs: any = Array(secretWord.length)
-    .fill(0)
-    .map(() => useRef());
-
-  const resetGame = () => {
-    setGameStatus("")
-    setAllAttemps([])
-    setIsOpen(false)
-  }
-
-  const actionKeyVirtual = (key: string) => {
-    handleVirtualKeyPress(key, secretWord, inputRefs, inputs, setInputs)
-  }
-
-  useEffect(() => {
-    if (inputs.every((input) => input !== " " && input !== "")) {
-      const wordsAttemp = inputs.join("")
-
-      if (!dicoUsed.includes(wordsAttemp.toLowerCase())) {
-        setIsInvalidWord(true);
-        sendToast({ type: "error", message: "Le mot n'existe pas", duration: 2000 });
-        return;
-      }
-
-      setAllAttemps((prevAllAttemps) => [...prevAllAttemps, [...inputs]]);
-      setInputs(Array(secretWord.length).fill(""));
-
-      const isCorrect = inputs.every(
-        (input, index) => input === secretWord[index]
-      );
-
-      if (isCorrect || allAttemps.length + 1 === secretWord.length) {
-        const result = isCorrect ? "won" : "lose"
-        setGameStatus(result);
-        setIsOpen(true);
-        setInputs(Array(secretWord.length).fill(""));
-      } else {
-        inputRefs[0].current.focus();
-      }
-    }
-  }, [inputs]);
 
   return (
     <LayoutPage>
-      {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={resetGame} secretWord={secretWord} />)}
+      {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} secretWord={secretWord} />)}
       <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center">
-        <div className="flex flex-col items-center mt-16">
-          <PreviousAttempts allAttemps={allAttemps} secretWord={secretWord} />
-          {!gameStatus && (
-            <div className="space-x-2 flex mt-2">
-              {inputs.map((input, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className={`max-md:w-12 max-md:h-12 w-14 h-14 flex text-center rounded-lg shadow-card bg-white  `}
-                  style={{ fontFamily: "Oswald" }}
-                  minLength={1}
-                  maxLength={1}
-                  value={input}
-                  onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
-                  onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs,)}
-                  ref={inputRefs[index]}
-                />
-              ))}
-            </div>)}
-          {
-            secretWord.length - allAttemps.length - 1 > 0 &&
-            <RemainingAttempts remainingAttempts={secretWord.length - allAttemps.length - 1} wordLength={secretWord.length} />
-          }
+        {!gameStatus && !isWordFound ?
+          (<GameBoard dicoUsed={dicoUsed} secretWord={secretWord} setGameStatus={setGameStatus} setIsOpen={setIsOpen} />) :
+          (
+            <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] mt-[20vh]">
+              <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-md text-sm">
+                <div className="flex flex-col">
+                  <h1 className="text-lg md:text-2xl font-bold">Le mot du jour a déjà été trouvé</h1>
+                  <span className="text-lg text-center p-2">Le mot caché était : </span>
+                  <span className="px-4 py-2 border-2 border-gray-600 border-dashed  w-fit items-center rounded-lg self-center">
+                    {secretWord}
+                  </span>
+                </div>
 
-          {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisie n'existe pas dans le dictionnaire</span>}
-        </div>
-        <div className="my-8 p-4 border rounded-lg max-md:hidden backdrop-filter backdrop-blur-sm">
-          <Keyboard onKeyPress={actionKeyVirtual} />
-        </div>
+                <Link to={'/game-list'}>
+                  <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
+                </Link>
+              </div>
+
+            </div>
+          )}
       </div>
-    </LayoutPage>
+    </LayoutPage >
   );
 }

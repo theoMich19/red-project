@@ -6,7 +6,7 @@ import LayoutPage from "~/compnent/common/pageLayout";
 
 export default function Information() {
     const [flipped, setFlipped] = useState(false);
-    const [flippedS, setFlippedS] = useState(false);
+    const [flippedR, setflippedR] = useState(false);
 
     return (
         <LayoutPage>
@@ -28,9 +28,9 @@ export default function Information() {
                 </div>
                 <div
                     className="cursor-pointer perspective"
-                    onClick={() => setFlippedS(!flippedS)}
+                    onClick={() => setflippedR(!flippedR)}
                 >
-                    <div className={`relative  min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] transition-transform duration-700 preserve-3d ${flippedS ? 'rotate-y-180' : ''}`}>
+                    <div className={`relative  min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] transition-transform duration-700 preserve-3d ${flippedR ? 'rotate-y-180' : ''}`}>
                         <div className="absolute backface-hidden w-full h-full backdrop-filter backdrop-blur-lg rounded-lg p-4 flex items-center justify-center text-white gap-4 text-md">
                             <h1 className="text-white text-2xl font-bold text-center">Comment jouer</h1>
                         </div>

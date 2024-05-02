@@ -1,5 +1,6 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import { Session, createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
+import { User } from "./ts/user";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET mut be set");
 
@@ -13,6 +14,18 @@ export const sessionStorage = createCookieSessionStorage({
     secure: true,
   },
 });
+
+export async function commitCookie({
+  session,
+  remember = true,
+}: {
+  session: Session;
+  remember?: boolean;
+}) {
+  return await sessionStorage.commitSession(session, {
+    maxAge: remember ? 60 * 60 * 24 * 7 : undefined,
+  });
+}
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
@@ -40,18 +53,7 @@ export async function createUserSession({
   session.set("token", token);
   return redirect(redirectTo, {
     headers: {
-      "Set-Cookie": await sessionStorage.commitSession(session, {
-        maxAge: 60 * 60 * 2,
-      }),
-    },
-  });
-}
-
-export async function logout(request: Request) {
-  const session = await getSession(request);
-  return redirect("/", {
-    headers: {
-      "Set-Cookie": await sessionStorage.destroySession(session),
+      "Set-Cookie": await commitCookie({ session, remember }),
     },
   });
 }
@@ -68,4 +70,30 @@ export async function getUser(request: Request) {
   }
 
   throw await logout(request);
+}
+
+export async function updateUserSession({
+  request,
+  sessionKey,
+  user,
+}: {
+  request: Request;
+  sessionKey: string;
+  user: User;
+}) {
+  const session = await getSession(request);
+  session.set(sessionKey, user);
+  return {
+    "Set-Cookie": await commitCookie({ session }),
+  };
+}
+
+export async function logout(request: Request) {
+  const session = await getSession(request);
+  const destroyCookieHeader = await sessionStorage.destroySession(session);
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": destroyCookieHeader,
+    },
+  });
 }

@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion"
 import { Link } from 'react-router-dom';
+import { LoaderFunctionArgs } from '@remix-run/node';
+import { getUser } from '~/session.server';
+import { Form, useLoaderData } from '@remix-run/react';
+import { User } from '~/ts/user';
 
-const Navbar = () => {
+
+const Navbar = ({ user }: { user: User | null }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+    const connected = user && user?.pseudo !== ""
 
     return (
         <nav className={`bg-transparent text-white p-4 ${isMobileMenuOpen ? "bg-[url('app/assets/images/bg/fond5.png')] bg-cover bg-center h-[100vh]" : ""}`}>
@@ -25,11 +32,7 @@ const Navbar = () => {
                     {/* <Link to={'/time-attack'} className="px-4 py-2 hover:bg-gray-700 rounded">time-attack</Link> */}
                     <Link to={"/information"} className="px-4 py-2 hover:bg-gray-700 rounded">Information</Link>
                     {
-                        true ?
-                            (
-                                <Link to={"/login"} className="px-4 py-2 hover:bg-gray-700 rounded">Se connecter</Link>
-
-                            ) :
+                        connected ?
                             (
                                 <div className="relative">
                                     <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="px-4 py-2 hover:bg-gray-700 rounded focus:outline-none focus:shadow-outline">
@@ -39,10 +42,16 @@ const Navbar = () => {
                                         <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl text-black">
                                             <Link to={"/profile"} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
                                             <Link to={"/profile/stats"} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Stats</Link>
-                                            <Link to={"/logout"} className="block px-4 py-2 text-sm hover:bg-gray-100">Déconnexion</Link>
+                                            <Form action="/logout" method="post" className="w-full">
+                                                <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
+                                            </Form>
                                         </div>
                                     )}
                                 </div>
+                            ) :
+                            (
+                                <Link to={"/login"} className="px-4 py-2 hover:bg-gray-700 rounded">Se connecter</Link>
+
                             )
                     }
                 </div>

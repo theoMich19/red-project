@@ -11,12 +11,12 @@ import LayoutPage from "~/compnent/common/pageLayout";
 interface GameBoardProps {
     dicoUsed: Array<string>,
     secretWord: string,
-    setGameStatus: (status: string) => void;
+    handChageGameStatus: (status: string) => void;
     setIsOpen: (open: boolean) => void;
 
 }
 
-export default function GameBoard({ dicoUsed, secretWord, setGameStatus, setIsOpen }: GameBoardProps) {
+export default function GameBoard({ dicoUsed, secretWord, handChageGameStatus, setIsOpen }: GameBoardProps) {
     /*
    * utilisation d'un objet pour chaque lettre [{id :'', value: '', bg: ''}] 
   */
@@ -28,7 +28,7 @@ export default function GameBoard({ dicoUsed, secretWord, setGameStatus, setIsOp
         .map(() => useRef());
 
     // const resetGame = () => { // enlever le reste et mettre une fin
-    //     setGameStatus("")
+    //     handChageGameStatus("")
     //     setAllAttemps([])
     //     setIsOpen(false)
     // }
@@ -56,7 +56,7 @@ export default function GameBoard({ dicoUsed, secretWord, setGameStatus, setIsOp
 
             if (isCorrect || allAttemps.length + 1 === secretWord.length) {
                 const result = isCorrect ? "won" : "lose"
-                setGameStatus(result);
+                handChageGameStatus(result);
                 setIsOpen(true);
                 setInputs(Array(secretWord.length).fill(""));
             } else {

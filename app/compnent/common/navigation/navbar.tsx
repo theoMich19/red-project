@@ -12,6 +12,7 @@ const Navbar = ({ user }: { user: User | null }) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     const connected = user && user?.pseudo !== ""
+    const defaultStyleBtn = "w-full px-4 py-4 hover:text-orange-400 duration-300 ease-in-out transition-colors"
 
     return (
         <nav className={`bg-transparent text-white p-4 ${isMobileMenuOpen ? "bg-[url('app/assets/images/bg/fond5.png')] bg-cover bg-center h-[100vh]" : ""}`}>
@@ -40,8 +41,8 @@ const Navbar = ({ user }: { user: User | null }) => {
                                     </button>
                                     {isProfileOpen && (
                                         <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl text-black">
-                                            <Link to={"/profile"} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
-                                            <Link to={"/profile/stats"} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Stats</Link>
+                                            <Link to={`/user/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
+                                            {/* <Link to={`/user/${user.id}/stats`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Stats</Link> */}
                                             <Form action="/logout" method="post" className="w-full">
                                                 <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
                                             </Form>
@@ -57,17 +58,14 @@ const Navbar = ({ user }: { user: User | null }) => {
                 </div>
                 {isMobileMenuOpen && (
                     <div className="lg:hidden absolute top-60 left-0 right-0 z-50 flex flex-col items-center text-center font-bold text-3xl">
-                        <Link to={'/game-day'} className={`px-4 py-4 ${isProfileOpen ? "text-gray-500" : ""}`}>Game-Day</Link>
-                        <Link to={"/information"} className={`px-4 py-4 ${isProfileOpen ? "text-gray-500" : ""}`}>Information</Link>
+                        <Link to={'/game-day'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Game-Day</Link>
+                        <Link to={'/game-list'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>More games</Link>
+                        <Link to={"/information"} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Information</Link>
                         {
-                            true ?
-                                (
-                                    <Link to={"/login"} className={`px-4 py-4 ${isProfileOpen ? "text-gray-500" : ""}`}>Se connecter</Link>
-
-                                ) :
+                            connected ?
                                 (
                                     <>
-                                        <button onClick={() => setIsProfileOpen(!isProfileOpen)} className={`px-4 py-4 w-full transition-all duration-100 ease-in-out ${isProfileOpen && "bg-white bg-opacity-60  text-black"}`}>
+                                        <button onClick={() => setIsProfileOpen(!isProfileOpen)} className={`${defaultStyleBtn} ${isProfileOpen && "bg-white bg-opacity-30  text-black"}`}>
                                             Profile
                                         </button>
                                         <AnimatePresence>
@@ -102,15 +100,20 @@ const Navbar = ({ user }: { user: User | null }) => {
                                                             },
                                                         },
                                                     }}>
-                                                    <div className={`text-2xl w-[100vw] gap-4 bg-opacity-60 bg-white h-full`}>
-                                                        <Link to={"/profile"} className="block px-4">Mon Profile</Link>
-                                                        <Link to={"/profile/stats"} className="block px-4">Mes Stats</Link>
-                                                        <Link to={"/logout"} className="block px-4">Déconnexion</Link>
+                                                    <div className={`text-2xl w-[100vw] gap-4 bg-opacity-30 bg-white h-full`}>
+                                                        <Link to={`/user/${user.id}`} className={defaultStyleBtn}>Mon Profile</Link>
+                                                        <Form action="/logout" method="post" className="w-full">
+                                                            <button type="submit" className={defaultStyleBtn}>Déconnexion</button>
+                                                        </Form>
                                                     </div>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
                                     </>
+                                ) :
+                                (
+                                    <Link to={"/login"} className={`px-4 py-4 ${isProfileOpen ? "text-gray-500" : ""}`}>Se connecter</Link>
+
                                 )
                         }
 

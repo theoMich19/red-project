@@ -65,6 +65,7 @@ export async function getUser(request: Request) {
   if (user === undefined) {
     return null;
   }
+
   if (user) {
     return user;
   }

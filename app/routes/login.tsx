@@ -27,7 +27,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         user: response.user,
         userId: response.user.id.toString(),
         remember: remember === "on" ? true : false,
-        token: response.user.token,
+        token: response.access_token,
         redirectTo: '/game-day'
     })
 }

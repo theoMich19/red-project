@@ -1,13 +1,28 @@
-import { Link } from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import LayoutPage from "~/compnent/common/pageLayout";
+import { getUser } from "~/session.server";
+import { User } from "~/ts/user";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+    const user = await getUser(request)
+
+
+    if (!user) {
+        redirect('/')
+    }
+    return { user }
+}
+
 
 export default function Game() {
+    let { user }: { user: User } = useLoaderData()
     const [survivalGameInfoFlipped, setSurvivalGameInfoFlipped] = useState(false);
     const [timeAttackInfoFlipped, setTimeAttackInfoFlipped] = useState(false);
 
     return (
-        <LayoutPage>
+        <LayoutPage user={user}>
             <div className="absolute top-16 left-0 right-0 bg-red-500 text-white text-center py-2 z-0">
                 Cette page est en construction
             </div>

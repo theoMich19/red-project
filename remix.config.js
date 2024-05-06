@@ -1,4 +1,4 @@
-import { flatRoutes } from "remix-flat-routes";
+// import { flatRoutes } from "remix-flat-routes";
 
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
@@ -7,7 +7,7 @@ export default {
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
   // serverBuildPath: "build/index.js",
-  routes: async (defineRoutes) => {
-    return flatRoutes("routes", defineRoutes);
-  },
+  // routes: async (defineRoutes) => {
+  //   return flatRoutes("routes", defineRoutes);
+  // },
 };

@@ -2,33 +2,35 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { CircleCheckBig, Pencil, SearchCheck, UsersRound } from "lucide-react";
 import LayoutPage from "~/compnent/common/pageLayout";
-import { getUser } from "~/session.server";
+import { getSession, getUser } from "~/session.server";
 import { User } from "~/ts/user";
 
+interface useLoaderDataType { user: User, wordsFoundList: Array<Word> }
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+    const session = await getSession(request)
+    const token = await session.get('token')
+
     const user: User = await getUser(request)
     if (!user || user == null) {
         redirect('/')
     }
 
-    // const apiWordsFind = await fetch(`${process.env.REST_URL_API}/wordsFound/${user.id}`)
-    // const numberWordsFind = await apiWordsFind.json()
-    // console.log("🚀 ~ loader ~ numberWordsFind:", numberWordsFind)
+    const apiWordsFind = await fetch(`${process.env.REST_URL_API}/users/${user.id}/wordsFound`, {
+        method: "get",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`
+        },
+    })
+    const wordsFoundList = await apiWordsFind.json()
 
-    return { user, numberWordsFind: 0 }
+    return { user, wordsFoundList }
 }
 
 export default function profile() {
-    const { user, numberWordsFind }: { user: User, numberWordsFind: number } = useLoaderData()
-    const data = [{
-        id: 1,
-        value: "test",
-        date: "2024-05-02",
-    }, {
-        id: 2,
-        value: "test",
-        date: "2024-05-02",
-    }]
+    const { user, wordsFoundList }: useLoaderDataType = useLoaderData()
+
 
     return (
         <LayoutPage user={user}>
@@ -46,17 +48,17 @@ export default function profile() {
                         <div>
                             <div className="flex justify-between w-full">
                                 <h2 className="text-xl font-bold">{user.pseudo}</h2>
-                                <Link to="/edit-profile" className="flex font-bold text-sm p-1 gap-2 rounded text-white opacity-45 text-end items-center">
+                                {/* <Link to="/edit-profile" className="flex font-bold text-sm p-1 gap-2 rounded text-white opacity-45 text-end items-center">
                                     <Pencil size={14} />
                                     Modifier
-                                </Link>
+                                </Link> */}
                             </div>
                             <span className="text-sm">Membre depuis le {user.birthday.split(" ")[0]}</span>
                         </div>
                         <div className="flex justify-evenly items-end">
                             <div className="flex flex-col items-center text-center opacity-50 tooltip">
                                 <span><SearchCheck size={20} /></span>
-                                <span className="opacity-100">{numberWordsFind}</span>
+                                <span className="opacity-100">{wordsFoundList.length}</span>
                                 <span className="tooltiptext">Mots trouvé</span>
                             </div>
                             <div className="flex flex-col items-center text-center opacity-50 tooltip">
@@ -78,12 +80,12 @@ export default function profile() {
                     </div>
                     {/* change to calendar */}
                     {
-                        data.map(wordsFind => {
+                        wordsFoundList.map((wordsFind: Word) => {
                             return (
                                 <div className="flex justify-around">
                                     <CircleCheckBig />
                                     <span className="text-md">{wordsFind.value}</span>
-                                    <span className="text-md">{wordsFind.date}</span>
+                                    <span className="text-md">{wordsFind.date_create.split(" ")[0]}</span>
                                 </div>
                             )
                         })

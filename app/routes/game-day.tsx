@@ -12,14 +12,24 @@ import { User } from "~/ts/user";
 interface useLoaderDataType { user: User, dicoUsed: Array<string>, dataSecretWord: Word, isWordFound: boolean }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const session = await getSession(request)
+  const token = await session.get('token')
   const user = await getUser(request)
 
-  let isWordFound = false; // faire requet pour savoir
   let res = await fetch(`${process.env.REST_URL_API}/wordsDay`);
   const dataSecretWord = await res.json();
 
-  const secretWord = dataSecretWord.value.toUpperCase();
+  let res2 = await fetch(`${process.env.REST_URL_API}/users/${user.id}/wordsFound/${dataSecretWord.id}`, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+  });
+  let dataIsWordFound = await res2.json();
 
+  const isWordFound = dataIsWordFound.isWordFound ?? false
+  const secretWord = dataSecretWord.value.toUpperCase();
   const sizeWord = secretWord.length
   const valueindex = numberToWord(sizeWord) as string
   const listWords: any = dico;
@@ -39,11 +49,11 @@ export default function GameDay() {
     if (status === "won") {
       const formData = new FormData()
       formData.append("user_id", user.id.toString())
-      formData.append("words_id", dataSecretWord.id.toString())
+      formData.append("word_id", dataSecretWord.id.toString())
 
       fetcherWordFind.submit(formData, {
         method: "post",
-        action: "/api/addWordToUser"
+        action: "/api/game/addWordToUser"
       })
     }
   }
@@ -83,7 +93,6 @@ export default function GameDay() {
                   <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                 </Link>
               </div>
-
             </div>
           )
         }

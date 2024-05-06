@@ -1,15 +1,27 @@
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import CardInfo from "~/compnent/common/card/card-info";
-import NavBar from "~/compnent/common/navigation/navbar";
 import LayoutPage from "~/compnent/common/pageLayout";
+import { getUser } from "~/session.server";
+import { User } from "~/ts/user";
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+    const user = await getUser(request)
+
+
+    if (!user) {
+        redirect('/')
+    }
+    return { user }
+}
 
 export default function Information() {
+    let { user }: { user: User } = useLoaderData()
     const [flipped, setFlipped] = useState(false);
     const [flippedR, setflippedR] = useState(false);
 
     return (
-        <LayoutPage>
+        <LayoutPage user={user}>
             <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
                 <div
                     className="cursor-pointer perspective"

@@ -19,16 +19,16 @@ export default function Game() {
     let { user }: { user: User } = useLoaderData();
     const [selectedId, setSelectedId] = useState(null);
 
-    const games = [
-        { id: 'survival', title: 'Survie', subtitle: 'Jeu de survie' },
-        { id: 'time-attack', title: 'Contre la montre', subtitle: 'Trouvez les mots rapidement' },
-        { id: 'infinity', title: 'Entrainement', subtitle: 'Mode infini' }
+    const gamesInfo = [
+        { id: 'survival', title: 'Survie', subtitle: 'Jeu de survie', content: "Dans ce mode, le joueur peut échouer à trois mots sans que la partie s'arrête. Concentrez-vous et survivez aussi longtemps que possible!" },
+        { id: 'time-attack', title: 'Contre la montre', subtitle: 'Trouvez les mots rapidement', content: "Dans ce mode, le joueur doit trouver le plus de mots possible rapidement. Chaque mot correct vous donne du temps supplémentaire. Soyez rapide et précis!" },
+        { id: 'infinity', title: 'Entrainement', subtitle: 'Mode infini', content: "Dans ce mode, le joueur joue à l'infini. Aucun moyen de s'arreter. Trouver tous les mots possible." }
     ];
 
     return (
         <LayoutPage user={user}>
             <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
-                {games.map((game: any) => (
+                {gamesInfo.map((game: any) => (
                     <motion.div
                         key={game.id}
                         layoutId={game.id}
@@ -50,7 +50,7 @@ export default function Game() {
                     {selectedId && (
                         <>
                             <motion.div
-                                className="fixed inset-0 bg-black bg-opacity-50"
+                                className="fixed inset-0 bg-black bg-opacity-50 z-20"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -58,7 +58,7 @@ export default function Game() {
                             ></motion.div>
                             <motion.div
                                 layoutId={selectedId}
-                                className="fixed inset-0 bg-white p-8 m-auto rounded-lg shadow-lg flex flex-col items-center"
+                                className="fixed inset-0 bg-white p-8 m-auto rounded-lg shadow-lg flex flex-col items-center z-30 gap-4"
                                 style={{ maxWidth: '600px', width: '80vw', maxHeight: '40vh' }}
                                 initial={{ opacity: 0, scale: 0.75 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -66,15 +66,15 @@ export default function Game() {
                                 transition={{ duration: 0.5 }}
                             >
                                 <div className="flex justify-between items-center w-full">
-                                    <div className="flex items-center gap-2">
-                                        <Infinity size={24} />
-                                        <h2>{games.find(game => game.id === selectedId)?.title}</h2>
+                                    <div className="flex items-center gap-2 text-xl">
+                                        <Infinity size={28} />
+                                        <h2>{gamesInfo.find(game => game.id === selectedId)?.title}</h2>
                                     </div>
                                     <button onClick={() => setSelectedId(null)} className="p-2">
                                         <X size={24} />
                                     </button>
                                 </div>
-                                <p className="mt-4">{games.find(game => game.id === selectedId)?.subtitle}</p>
+                                <p>{gamesInfo.find(game => game.id === selectedId)?.content}</p>
                                 <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     En construction
                                 </button>

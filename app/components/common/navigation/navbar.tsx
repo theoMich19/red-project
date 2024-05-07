@@ -57,7 +57,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                     }
                 </div>
                 {isMobileMenuOpen && (
-                    <div className="lg:hidden absolute top-60 left-0 right-0 z-50 flex flex-col items-center text-center font-bold text-3xl">
+                    <div className="lg:hidden absolute top-60 left-0 right-0 z-5 flex flex-col items-center text-center font-bold text-3xl">
                         <Link to={'/game-day'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Game-Day</Link>
                         <Link to={'/game-list'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>More games</Link>
                         <Link to={"/information"} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Information</Link>

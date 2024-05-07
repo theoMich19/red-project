@@ -14,7 +14,7 @@ export default function ModalGame({
 
   return (
     <div
-      className={`absolute inset-0 backdrop-blur-sm flex items-center modal-animation  z-50`}
+      className={`absolute inset-0 backdrop-blur-sm flex items-center modal-animation  z-20`}
       onClick={() => setIsOpen(false)}
     >
       <div className="container mx-auto max-w-fit">

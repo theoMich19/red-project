@@ -1,72 +1,112 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import LayoutPage from "~/components/common/pageLayout";
 import { getUser } from "~/session.server";
 import { User } from "~/ts/user";
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpenCheck, X, CheckSquare, Clock, BadgeInfo } from "lucide-react";
+import LayoutPage from "~/components/common/pageLayout";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-    const user = await getUser(request)
-
-
+    const user = await getUser(request);
     if (!user) {
-        redirect('/')
+        redirect('/');
     }
-    return { user }
+    return { user };
 }
 
 export default function Information() {
-    let { user }: { user: User } = useLoaderData()
-    const [flipped, setFlipped] = useState(false);
-    const [flippedR, setflippedR] = useState(false);
+    let { user }: { user: User } = useLoaderData();
+    const [selectedId, setSelectedId] = useState(null);
+
+    const cards = [
+        {
+            id: 'information',
+            icon: <BadgeInfo />,
+            title: 'Information',
+            content: "C'est un jeu captivant où l'objectif est de dévoiler un mot mystérieusement dissimulé. Pour ce faire, le joueur doit soumettre un mot de même longueur. Attention le nombre d'essaie est limité.\n\nPlongez dans cette aventure ludique où la déduction et la perspicacité vous mèneront à la découverte du mot énigmatique.",
+        },
+        {
+            id: 'how-to-play',
+            icon: <BookOpenCheck />,
+            title: 'Comment jouer',
+            content: "Une fois le mot saisie",
+            subContent: [
+                { key: 'gray', bgColor: "bg-gray-300", text: "GRIS, si la lettre ne fait pas partie du mot secret.", icon: <X /> },
+                { key: 'orange', bgColor: "bg-orange-200", text: "ORANGE, si la lettre fait partie du mot secret mais n'est pas positionnée correctement.", icon: <Clock /> },
+                { key: 'green', bgColor: "bg-green-200", text: "VERT, si la lettre fait partie du mot secret et est positionnée correctement.", icon: <CheckSquare /> }
+            ]
+        }
+    ];
+
+    const cardSelected = cards.find(card => card.id === selectedId)
 
     return (
         <LayoutPage user={user}>
             <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
-                <div
-                    className="cursor-pointer perspective"
-                    onClick={() => setFlipped(!flipped)}
-                >
-                    <div className={`relative min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] transition-transform duration-700 preserve-3d ${flipped ? 'rotate-y-180' : ''}`}>
-                        <div className="absolute backface-hidden w-full h-full backdrop-filter backdrop-blur-lg rounded-lg p-4 flex items-center justify-center text-white gap-4 text-md">
-                            <h1 className="text-white text-2xl font-bold text-center">Information</h1>
-                        </div>
-                        <div className="absolute rotate-y-180 backface-hidden w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center text-white gap-4 md:text-md text-sm">
-                            <h1 className="text-lg md:text-2xl font-bold">Enigmatique</h1>
-                            <p>C'est un jeu captivant où l'objectif est de dévoiler un mot mystérieusement dissimulé. Pour ce faire, le joueur doit soumettre un mot de même longueur. Attention le nombre d'essaie est limité.
-                                <br /><br />Plongez dans cette aventure ludique où la déduction et la perspicacité vous mèneront à la découverte du mot énigmatique.</p>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    className="cursor-pointer perspective"
-                    onClick={() => setflippedR(!flippedR)}
-                >
-                    <div className={`relative  min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] transition-transform duration-700 preserve-3d ${flippedR ? 'rotate-y-180' : ''}`}>
-                        <div className="absolute backface-hidden w-full h-full backdrop-filter backdrop-blur-lg rounded-lg p-4 flex items-center justify-center text-white gap-4 text-md">
-                            <h1 className="text-white text-2xl font-bold text-center">Comment jouer</h1>
-                        </div>
-                        <div className="absolute rotate-y-180 backface-hidden w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center text-white gap-4 md:text-md text-sm">
-                            <h1 className="text-lg md:text-2xl font-bold">Comment jouer</h1>
-                            <span className="text-left w-full">Une fois un mot saisie :</span>
-                            <ul>
-                                <li className="my-2">
-                                    <span className="bg-gray-200 rounded-lg p-1 font-bold text-black">GRIS</span>
-                                    , si la lettre ne fait pas partie du mot secret
-                                </li>
-                                <li className="my-2">
-                                    <span className="bg-orange-200 rounded-lg p-1 font-bold text-black">ORANGE</span>
-                                    , si la lettre fait partie du mot secret mais n'est pas positionnée correctement
-                                </li>
-                                <li className="my-2">
-                                    <span className="bg-green-200 rounded-lg p-1 font-bold w-4 text-black">VERT</span>
-                                    , si la lettre fait partie du mot secret et est positionnée correctement
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div >
+                {cards.map((card: any) => (
+                    <motion.div
+                        key={card.id}
+                        layoutId={card.id}
+                        onClick={() => setSelectedId(card.id)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="cursor-pointer p-4 bg-white rounded-lg shadow-lg min-w-[300px] text-center"
+                    >
+                        <h1 className="text-2xl font-bold text-slate-700">{card.title}</h1>
+                    </motion.div>
+                ))}
+
+                <AnimatePresence>
+                    {selectedId && (
+                        <>
+                            <motion.div
+                                className="fixed inset-0 bg-black bg-opacity-50 z-20"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.5 }}
+                                onClick={() => setSelectedId(null)}
+                            />
+                            <motion.div
+                                layoutId={selectedId}
+                                className="fixed inset-0 bg-white p-8 m-auto rounded-lg shadow-lg flex flex-col items-center z-30 gap-4"
+                                style={{ maxWidth: '600px', width: '80vw', maxHeight: '50vh' }}
+                                initial={{ opacity: 0, scale: 0.75 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.5 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-2 text-xl">
+                                        {cardSelected?.icon}
+                                        <h1 className="text-2xl font-bold">{cardSelected?.title}</h1>
+                                    </div>
+                                    <button onClick={() => setSelectedId(null)} className="p-2">
+                                        <X size={24} />
+                                    </button>
+                                </div>
+                                <div className="flex flex-col items-start text-xl">
+                                    <span className="text-lg md:text-md overflow-auto">{cardSelected?.content}</span>
+                                    {selectedId === 'how-to-play' && (
+                                        <div className="text-lg md:text-md overflow-auto">
+                                            {cardSelected?.subContent?.map((item: any) => (
+                                                <div key={item.key} className="flex items-center gap-2 my-2">
+                                                    {/* {item.icon} */}
+                                                    <span className={`${item.bgColor} px-2 py-1 border rounded-lg font-bold`}>A</span>
+                                                    <span>{item.text}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
+            </div>
         </LayoutPage>
     );
 }

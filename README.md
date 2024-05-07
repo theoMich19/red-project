@@ -38,4 +38,3 @@ Make sure to deploy the output of `remix build`
 - `public/build/`
 
 next-u project
-welcom

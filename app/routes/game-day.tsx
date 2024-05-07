@@ -72,7 +72,7 @@ export default function GameDay() {
       {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} secretWord={secretWord} />)}
       <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center">
         {status ?
-          (<GameBoard dicoUsed={dicoUsed} secretWord={secretWord} handChageGameStatus={handChageGameStatus} setIsOpen={setIsOpen} />) :
+          (<GameBoard dicoUsed={dicoUsed} secretWord={secretWord} handChageGameStatus={handChageGameStatus} setIsOpen={setIsOpen} isRestAvaliable={false} />) :
           (
             <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] mt-[20vh]">
               <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-md text-sm">

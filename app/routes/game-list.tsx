@@ -1,10 +1,10 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { getUser } from "~/session.server";
 import { User } from "~/ts/user";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Infinity, X } from 'lucide-react';
+import { Clock, Infinity, Swords, X } from 'lucide-react';
 import LayoutPage from "~/components/common/pageLayout";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -20,10 +20,33 @@ export default function Game() {
     const [selectedId, setSelectedId] = useState(null);
 
     const gamesInfo = [
-        { id: 'survival', title: 'Survie', subtitle: 'Jeu de survie', content: "Dans ce mode, le joueur peut échouer à trois mots sans que la partie s'arrête. Concentrez-vous et survivez aussi longtemps que possible!" },
-        { id: 'time-attack', title: 'Contre la montre', subtitle: 'Trouvez les mots rapidement', content: "Dans ce mode, le joueur doit trouver le plus de mots possible rapidement. Chaque mot correct vous donne du temps supplémentaire. Soyez rapide et précis!" },
-        { id: 'infinity', title: 'Entrainement', subtitle: 'Mode infini', content: "Dans ce mode, le joueur joue à l'infini. Aucun moyen de s'arreter. Trouver tous les mots possible." }
+        {
+            id: 'survival',
+            link: "",
+            icon: <Swords size={24} />,
+            title: 'Survie',
+            subtitle: 'Jeu de survie',
+            content: "Dans ce mode, le joueur peut échouer à trois mots sans que la partie s'arrête. Concentrez-vous et survivez aussi longtemps que possible!"
+        },
+        {
+            id: 'time-attack',
+            link: "",
+            icon: <Clock size={24} />,
+            title: 'Contre la montre',
+            subtitle: 'Trouvez les mots rapidement',
+            content: "Dans ce mode, le joueur doit trouver le plus de mots possible rapidement. Chaque mot correct vous donne du temps supplémentaire. Soyez rapide et précis!"
+        },
+        {
+            id: 'infinity',
+            link: "/game-train",
+            icon: <Infinity size={24} />,
+            title: 'Entrainement',
+            subtitle: 'Mode infini',
+            content: "Dans ce mode, le joueur joue à l'infini. Aucun moyen de s'arreter.Trouver tous les mots possible."
+        }
     ];
+
+    const gameSelected = gamesInfo.find(game => game.id === selectedId)
 
     return (
         <LayoutPage user={user}>
@@ -40,7 +63,7 @@ export default function Game() {
                         className="cursor-pointer p-4 bg-white rounded-lg shadow-lg min-w-[300px]"
                     >
                         <div className="flex items-center gap-2">
-                            <Infinity size={24} />
+                            {game.icon}
                             <motion.h2>{game.title}</motion.h2>
                         </div>
                     </motion.div>
@@ -68,21 +91,32 @@ export default function Game() {
                                 <div className="flex justify-between items-center w-full">
                                     <div className="flex items-center gap-2 text-xl">
                                         <Infinity size={28} />
-                                        <h2>{gamesInfo.find(game => game.id === selectedId)?.title}</h2>
+                                        <h2>{gameSelected?.title}</h2>
                                     </div>
                                     <button onClick={() => setSelectedId(null)} className="p-2">
                                         <X size={24} />
                                     </button>
                                 </div>
-                                <p>{gamesInfo.find(game => game.id === selectedId)?.content}</p>
-                                <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    En construction
-                                </button>
+                                <p>{gameSelected?.content}</p>
+
+                                {
+                                    gameSelected && gameSelected?.link !== "" ?
+                                        (<Link to={gameSelected.link.toString()}>
+                                            <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">
+                                                Jouer
+                                            </span>
+                                        </Link>) :
+                                        (<button className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 text-sm rounded">
+                                            En construction
+                                        </button>)
+                                }
+
+
                             </motion.div>
                         </>
                     )}
                 </AnimatePresence>
             </div>
-        </LayoutPage>
+        </LayoutPage >
     );
 }

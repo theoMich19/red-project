@@ -11,12 +11,13 @@ import LayoutPage from "~/components/common/pageLayout";
 interface GameBoardProps {
     dicoUsed: Array<string>,
     secretWord: string,
+    isRestAvaliable: boolean,
     handChageGameStatus: (status: string) => void;
     setIsOpen: (open: boolean) => void;
 
 }
 
-export default function GameBoard({ dicoUsed, secretWord, handChageGameStatus, setIsOpen }: GameBoardProps) {
+export default function GameBoard({ dicoUsed, secretWord, isRestAvaliable = false, handChageGameStatus, setIsOpen }: GameBoardProps) {
     /*
    * utilisation d'un objet pour chaque lettre [{id :'', value: '', bg: ''}] 
   */
@@ -27,15 +28,10 @@ export default function GameBoard({ dicoUsed, secretWord, handChageGameStatus, s
         .fill(0)
         .map(() => useRef());
 
-    // const resetGame = () => { // enlever le reste et mettre une fin
-    //     handChageGameStatus("")
-    //     setAllAttemps([])
-    //     setIsOpen(false)
-    // }
 
-    const actionKeyVirtual = (key: string) => {
-        handleVirtualKeyPress(key, secretWord, inputRefs, inputs, setInputs)
-    }
+    // const actionKeyVirtual = (key: string) => {
+    //     handleVirtualKeyPress(key, secretWord, inputRefs, inputs, setInputs)
+    // }
 
     useEffect(() => {
         if (inputs.every((input) => input !== " " && input !== "")) {
@@ -59,6 +55,9 @@ export default function GameBoard({ dicoUsed, secretWord, handChageGameStatus, s
                 handChageGameStatus(result);
                 setIsOpen(true);
                 setInputs(Array(secretWord.length).fill(""));
+                if (isRestAvaliable) {
+                    setAllAttemps([])
+                }
             } else {
                 inputRefs[0].current.focus();
             }

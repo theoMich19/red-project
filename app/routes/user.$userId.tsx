@@ -115,8 +115,8 @@ export default function Profile() {
                                         variants={itemVariants}
                                     >
                                         <CircleCheckBig />
-                                        <span className="text-md">{word.value}</span>
-                                        <span className="text-md">{new Date(word.date_create).toLocaleDateString()}</span>
+                                        <span className="text-base">{word.value}</span>
+                                        <span className="text-base">{new Date(word.date_create).toLocaleDateString()}</span>
                                     </motion.div>
                                 ))}
                             </motion.div>

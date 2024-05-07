@@ -40,7 +40,7 @@ export default function profile() {
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <Link to={`/user/${user.id}/stats`} className="bg-green-500 font-bold py-2 px-8 text-md rounded">Voir mes stats</Link>
+                        <Link to={`/user/${user.id}/stats`} className="bg-green-500 font-bold py-2 px-8 text-base rounded">Voir mes stats</Link>
                     </div>
                 </div>
             </div>

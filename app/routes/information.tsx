@@ -85,20 +85,19 @@ export default function Information() {
                                 <div className="flex justify-between items-center w-full">
                                     <div className="flex items-center gap-2 text-xl">
                                         {cardSelected?.icon}
-                                        <h1 className="text-2xl font-bold">{cardSelected?.title}</h1>
+                                        <h1 className="md:text-2xl text-sm font-bold">{cardSelected?.title}</h1>
                                     </div>
                                     <button onClick={() => setSelectedId(null)} className="p-2">
                                         <X size={24} />
                                     </button>
                                 </div>
                                 <div className="flex flex-col items-start text-xl">
-                                    <span className="text-lg md:text-md overflow-auto">{cardSelected?.content}</span>
+                                    <span className="text-lg max-md:text-sm overflow-auto">{cardSelected?.content}</span>
                                     {selectedId === 'how-to-play' && (
-                                        <div className="text-lg md:text-md overflow-auto">
+                                        <div className="text-lg max-md:text-sm overflow-auto">
                                             {cardSelected?.subContent?.map((item: any) => (
                                                 <div key={item.key} className="flex items-center gap-2 my-2">
-                                                    {/* {item.icon} */}
-                                                    <span className={`${item.bgColor} px-2 py-1 border rounded-lg font-bold`}>A</span>
+                                                    <span className={`${item.bgColor} px-2 py-1 border rounded-lg font-bold max-md:self-start`}>A</span>
                                                     <span>{item.text}</span>
                                                 </div>
                                             ))}

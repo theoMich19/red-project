@@ -75,7 +75,7 @@ export default function GameDay() {
           (<GameBoard dicoUsed={dicoUsed} secretWord={secretWord} handChageGameStatus={handChageGameStatus} setIsOpen={setIsOpen} isRestAvaliable={false} />) :
           (
             <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] mt-[20vh]">
-              <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-md text-sm">
+              <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-base text-sm">
                 <div className="flex flex-col">
                   {
                     errorSecretWord ? (

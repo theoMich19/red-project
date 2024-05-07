@@ -19,8 +19,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const secretWords = [
         "MAINS", "PORTE", "VOILE", "ROUGE", "VERT", "IMAGE", "ROUTE", "TITRE", "FORME", "LIVRE",
         "CHIEN", "CHAT", "TABLE", "FRUIT", "BALLE", "NOIRE", "CRÈME", "MÉTAL", "VERRE", "BOITE",
-        "FINIR", "LASER", "SABLE", "DOUCE", "PEINE", "ÉCRAN", "HERBE", "MIEUX", "RAPIDE", "LOURD"
-    ]
+        "FINIR", "LASER", "SABLE", "DOUCE", "PEINE", "ÉCRAN", "HERBE", "MIEUX", "RAPIDE", "LOURD",
+        "POMME", "SINGE", "LAMPE", "ROBE", "PERLE", "GRAIN", "CREUX", "VAGUE", "PENTE", "VOIX",
+        "CHOIX", "PLAGE", "ANCRE", "LOUPE", "TENTE", "JAUNE", "ÉTOLE", "TIGRE", "BRUIT", "MONTE",
+        "ÉPAIS", "FLUTE", "PIANO", "LIGNE", "DÉBAT", "SALUT", "LUEUR", "OMBRE", "SOUPE", "FERME"
+    ];
+
 
     const listWords: any = dico;
     const dicoUsed: Array<string> = listWords["five"]
@@ -85,7 +89,7 @@ export default function GameTrain() {
                                     ) : (
                                         <div className="flex flex-col w-full border rounded-md p-4 bg-slate-100 items-center justify-center gap-4 ">
                                             <span>Plus aucun mot disponible pour le moment</span>
-                                            <Link to={'/game-mod'}>
+                                            <Link to={'/game-list'}>
                                                 <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                                             </Link>
                                         </div>
@@ -114,7 +118,7 @@ export default function GameTrain() {
                                 <div className="flex flex-col">
                                     <h1 className="text-lg md:text-2xl font-bold">{errorSecretWord}</h1>
                                 </div>
-                                <Link to={'/game-mod'}>
+                                <Link to={'/game-list'}>
                                     <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                                 </Link>
                             </div>

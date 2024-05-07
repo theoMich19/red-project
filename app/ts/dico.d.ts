@@ -1,0 +1,27 @@
+export type Dico = {
+  one: Array<string>;
+  two: Array<string>;
+  three: Array<string>;
+  four: Array<string>;
+  five: Array<string>;
+  six: Array<string>;
+  seven: Array<string>;
+  eight: Array<string>;
+  nine: Array<string>;
+  ten: Array<string>;
+  eleven: Array<string>;
+  twelve: Array<string>;
+  thirteen: Array<string>;
+  fourteen: Array<string>;
+  fifteen: Array<string>;
+  sixteen: Array<string>;
+  seventeen: Array<string>;
+  eighteen: Array<string>;
+  nineteen: Array<string>;
+  twenty: Array<string>;
+  "twenty-one": Array<string>;
+  "twenty-two": Array<string>;
+  "twenty-three": Array<string>;
+  "twenty-four": Array<string>;
+  "twenty-five": Array<string>;
+};

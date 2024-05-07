@@ -4,10 +4,10 @@ import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
 import { sendToast } from "~/utils/toast";
-import { PreviousAttempts, RemainingAttempts } from "~/compnent/common/attemps/attemps";
-import ModalGame from "~/compnent/modal/modal-game";
-import LayoutPage from "~/compnent/common/pageLayout";
-import { Keyboard } from "~/compnent/common/keyboard/keyboard";
+import { PreviousAttempts, RemainingAttempts } from "~/components/common/attemps/attemps";
+import ModalGame from "~/components/modal/modal-game";
+import LayoutPage from "~/components/common/pageLayout";
+import { Keyboard } from "~/components/common/keyboard/keyboard";
 
 const getWords = () => {
     // Suppose que vous voulez un array de mots au lieu d'un seul

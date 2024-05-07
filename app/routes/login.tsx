@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, json } from "@remix-run/node"
 import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-run/react"
-import LayoutPage from "~/compnent/common/pageLayout"
+import LayoutPage from "~/components/common/pageLayout"
 import { createUserSession, getUser } from "~/session.server"
 import { User } from "~/ts/user"
 

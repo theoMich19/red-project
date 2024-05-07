@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { CircleCheckBig, Pencil, SearchCheck, UsersRound } from "lucide-react";
-import LayoutPage from "~/compnent/common/pageLayout";
+import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUser } from "~/session.server";
 import { User } from "~/ts/user";
 

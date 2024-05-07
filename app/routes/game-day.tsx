@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link, useFetcher, useLoaderData } from '@remix-run/react';
 import { numberToWord } from "~/utils/transform";
 import { dico } from "../../data/dico"
-import ModalGame from "~/compnent/modal/modal-game";
-import LayoutPage from "~/compnent/common/pageLayout";
-import GameBoard from "~/compnent/game/game-board";
+import ModalGame from "~/components/modal/modal-game";
+import LayoutPage from "~/components/common/pageLayout";
+import GameBoard from "~/components/game/game-board";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { getSession, getUser } from "~/session.server";
 import { User } from "~/ts/user";
@@ -18,17 +18,21 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   let res = await fetch(`${process.env.REST_URL_API}/wordsDay`);
   const dataSecretWord = await res.json();
+  let isWordFound = false
 
-  let res2 = await fetch(`${process.env.REST_URL_API}/users/${user.id}/wordsFound/${dataSecretWord.id}`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`
-    },
-  });
-  let dataIsWordFound = await res2.json();
+  if (user) {
+    let res2 = await fetch(`${process.env.REST_URL_API}/users/${user.id}/wordsFound/${dataSecretWord.id}`, {
+      method: "get",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    });
+    let dataIsWordFound = await res2.json();
+    console.log("🚀 ~ loader ~ dataIsWordFound:", dataIsWordFound)
+    isWordFound = dataIsWordFound.isWordFound
+  }
 
-  const isWordFound = dataIsWordFound.isWordFound ?? false
   const secretWord = dataSecretWord.value.toUpperCase();
   const sizeWord = secretWord.length
   const valueindex = numberToWord(sizeWord) as string

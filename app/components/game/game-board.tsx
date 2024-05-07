@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { PreviousAttempts, RemainingAttempts } from "~/compnent/common/attemps/attemps";
+import { PreviousAttempts, RemainingAttempts } from "~/components/common/attemps/attemps";
 
 import { handleInputChange, handleKeyDown, handleVirtualKeyPress } from "~/utils/game";
 
-import ModalGame from "~/compnent/modal/modal-game";
-import { Keyboard } from "~/compnent/common/keyboard/keyboard";
+import ModalGame from "~/components/modal/modal-game";
+import { Keyboard } from "~/components/common/keyboard/keyboard";
 import { sendToast } from "~/utils/toast";
-import LayoutPage from "~/compnent/common/pageLayout";
+import LayoutPage from "~/components/common/pageLayout";
 
 interface GameBoardProps {
     dicoUsed: Array<string>,

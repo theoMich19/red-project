@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import LayoutPage from "~/compnent/common/pageLayout";
+import LayoutPage from "~/components/common/pageLayout";
 import { getUser } from "~/session.server";
 import { User } from "~/ts/user";
 

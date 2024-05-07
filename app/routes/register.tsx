@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, json } from "@remix-run/node"
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react"
 import { useState } from "react"
-import LayoutPage from "~/compnent/common/pageLayout"
+import LayoutPage from "~/components/common/pageLayout"
 import { createUserSession } from "~/session.server"
 
 export const action = async ({ request }: ActionFunctionArgs) => {

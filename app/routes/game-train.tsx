@@ -85,7 +85,7 @@ export default function GameTrain() {
                                     ) : (
                                         <div className="flex flex-col w-full border rounded-md p-4 bg-slate-100 items-center justify-center gap-4 ">
                                             <span>Plus aucun mot disponible pour le moment</span>
-                                            <Link to={'/game-list'}>
+                                            <Link to={'/game-mod'}>
                                                 <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                                             </Link>
                                         </div>
@@ -114,7 +114,7 @@ export default function GameTrain() {
                                 <div className="flex flex-col">
                                     <h1 className="text-lg md:text-2xl font-bold">{errorSecretWord}</h1>
                                 </div>
-                                <Link to={'/game-list'}>
+                                <Link to={'/game-mod'}>
                                     <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                                 </Link>
                             </div>

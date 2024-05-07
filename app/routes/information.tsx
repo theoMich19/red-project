@@ -55,7 +55,10 @@ export default function Information() {
                         transition={{ duration: 0.5 }}
                         className="cursor-pointer p-4 bg-white rounded-lg shadow-lg min-w-[300px] text-center"
                     >
-                        <h1 className="text-2xl font-bold text-slate-700">{card.title}</h1>
+                        <div className="flex items-center gap-2 text-2xl font-bold text-slate-700">
+                            {card.icon}
+                            <motion.h1>{card.title}</motion.h1>
+                        </div>
                     </motion.div>
                 ))}
 

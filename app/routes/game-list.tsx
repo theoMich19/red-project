@@ -62,15 +62,15 @@ export default function Game() {
                         transition={{ duration: 0.5 }}
                         className="cursor-pointer p-4 bg-white rounded-lg shadow-lg min-w-[300px]"
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 text-2xl font-bold text-slate-700">
                             {game.icon}
-                            <motion.h2>{game.title}</motion.h2>
+                            <motion.h1>{game.title}</motion.h1>
                         </div>
                     </motion.div>
                 ))}
 
                 <AnimatePresence>
-                    {selectedId && (
+                    {selectedId && gameSelected && (
                         <>
                             <motion.div
                                 className="fixed inset-0 bg-black bg-opacity-50 z-20"
@@ -90,17 +90,17 @@ export default function Game() {
                             >
                                 <div className="flex justify-between items-center w-full">
                                     <div className="flex items-center gap-2 text-xl">
-                                        <Infinity size={28} />
-                                        <h2>{gameSelected?.title}</h2>
+                                        {gameSelected.icon}
+                                        <h2>{gameSelected.title}</h2>
                                     </div>
                                     <button onClick={() => setSelectedId(null)} className="p-2">
                                         <X size={24} />
                                     </button>
                                 </div>
-                                <p>{gameSelected?.content}</p>
+                                <p>{gameSelected.content}</p>
 
                                 {
-                                    gameSelected && gameSelected?.link !== "" ?
+                                    gameSelected.link !== "" ?
                                         (<Link to={gameSelected.link.toString()}>
                                             <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">
                                                 Jouer

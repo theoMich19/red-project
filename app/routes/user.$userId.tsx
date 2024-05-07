@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { motion } from "framer-motion";
 import { CircleCheckBig, Pencil, SearchCheck, UsersRound } from "lucide-react";
 import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUser } from "~/session.server";
@@ -28,70 +29,101 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return { user, wordsFoundList }
 }
 
-export default function profile() {
+export default function Profile() {
     const { user, wordsFoundList }: useLoaderDataType = useLoaderData()
 
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0, x: -100 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: {
+                delayChildren: 0.3,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { type: 'spring', stiffness: 100 }
+        }
+    };
 
     return (
         <LayoutPage user={user}>
             <div className="flex flex-col items-center overflow-x-hidden h-full bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center pt-24">
-                <div className="flex gap-5 min-w-[50vw] text-white rounded-lg p-8"
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
-                    }}>
-                    <img
-                        src={"/images/avatar/avatar_1.jpg"}
-                        alt="User Avatar"
-                        style={{ width: "150px", height: "150px", borderRadius: "15%" }}
-                    />
-                    <div className="flex flex-col w-full justify-between">
-                        <div>
-                            <div className="flex justify-between w-full">
-                                <h2 className="text-xl font-bold">{user.pseudo}</h2>
-                                {/* <Link to="/edit-profile" className="flex font-bold text-sm p-1 gap-2 rounded text-white opacity-45 text-end items-center">
-                                    <Pencil size={14} />
-                                    Modifier
-                                </Link> */}
-                            </div>
-                            <span className="text-sm">Membre depuis le {user.birthday.split(" ")[0]}</span>
+                <motion.div className="flex flex-col items-center overflow-x-hidden h-full"
+                    initial="hidden"
+                    animate="visible"
+                    variants={containerVariants}
+                >
+                    <motion.div className="flex min-w-[50vw] text-white rounded-lg p-8 m-4 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                        style={{ backdropFilter: 'blur(10px)' }}
+                    >
+                        <motion.img
+                            src={"/images/avatar/avatar_1.jpg"}
+                            alt="User Avatar"
+                            className="mb-4 w-32 h-32 rounded-full"
+                            initial={{ scale: 0 }}
+                            animate={{ rotate: 360, scale: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20
+                            }}
+                        />
+                        <div className="text-start">
+                            <motion.h2 className="text-2xl font-bold"
+                                variants={itemVariants}
+                            >
+                                {user.pseudo}
+                            </motion.h2>
+                            <motion.span className="text-sm"
+                                variants={itemVariants}
+                            >
+                                Membre depuis le {new Date(user.birthday).toLocaleDateString()}
+                            </motion.span>
                         </div>
-                        <div className="flex justify-evenly items-end">
-                            <div className="flex flex-col items-center text-center opacity-50 tooltip">
-                                <span><SearchCheck size={20} /></span>
-                                <span className="opacity-100">{wordsFoundList.length}</span>
-                                <span className="tooltiptext">Mots trouvé</span>
-                            </div>
-                            <div className="flex flex-col items-center text-center opacity-50 tooltip">
-                                <span><UsersRound size={20} /></span>
-                                <span className="opacity-100">0</span>
-                                <span className="tooltiptext">Amis</span>
-                            </div>
+                    </motion.div>
+                    <motion.div className="flex justify-evenly gap-5 min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                        variants={containerVariants}
+                    >
+                        <div className="flex flex-col items-center text-center opacity-80">
+                            <motion.span className="flex justify-center text-center gap-4"><SearchCheck size={20} />Mots trouvés </motion.span>
+                            <motion.span variants={itemVariants}>{wordsFoundList.length}</motion.span>
                         </div>
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5 min-w-[50vw] text-white rounded-lg p-4 mt-4"
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
-                    }}>
-                    <div className="flex justify-around">
-                        <span className="text-md"></span>
-                        <span className="text-md">Mots</span>
-                        <span className="text-md">Date</span>
-                    </div>
-                    {/* change to calendar */}
+                        <div className="flex flex-col items-center text-center opacity-80">
+                            <motion.span className="flex justify-center text-center gap-4"><UsersRound size={20} />Amis</motion.span>
+                            <motion.span variants={itemVariants}>0</motion.span>
+                        </div>
+                    </motion.div>
                     {
-                        wordsFoundList.map((wordsFind: Word) => {
-                            return (
-                                <div className="flex justify-around">
-                                    <CircleCheckBig />
-                                    <span className="text-md">{wordsFind.value}</span>
-                                    <span className="text-md">{wordsFind.date_create.split(" ")[0]}</span>
-                                </div>
-                            )
-                        })
+                        wordsFoundList.length !== 0 ? (
+                            <motion.div className="flex flex-col gap-5 min-w-[50vw] text-white rounded-lg p-4 mt-4  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                                style={{
+                                    backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
+                                }}
+                                variants={containerVariants}
+                            >
+                                {wordsFoundList.map((word, index) => (
+                                    <motion.div className="flex justify-around items-center"
+                                        key={index}
+                                        variants={itemVariants}
+                                    >
+                                        <CircleCheckBig />
+                                        <span className="text-md">{word.value}</span>
+                                        <span className="text-md">{new Date(word.date_create).toLocaleDateString()}</span>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        ) : null
                     }
-                </div>
+                </motion.div>
             </div>
         </LayoutPage>
-    )
+    );
 }

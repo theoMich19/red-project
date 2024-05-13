@@ -9,12 +9,16 @@ import {
   Scripts,
   ScrollRestoration,
   json,
+  useLocation,
+  useNavigation,
 } from "@remix-run/react";
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SpeedInsights } from "@vercel/speed-insights/remix"
-import { getUser } from "./session.server";
+import EnigmaticLoader from "./components/common/loader/loader";
+import { useState } from "react";
+
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -27,6 +31,10 @@ export const links: LinksFunction = () => [
 
 
 export default function App() {
+  const navigation = useNavigation();
+  const loading = navigation.state === "loading"
+
+
   return (
     <html lang="en">
       <head>
@@ -36,6 +44,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        {loading && <EnigmaticLoader />}
         <Analytics />
         <SpeedInsights />
         <Outlet />

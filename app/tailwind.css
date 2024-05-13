@@ -67,3 +67,17 @@ body {
   visibility: visible;
   opacity: 1;
 }
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-150px);
+  }
+}
+
+.animate-wave > div {
+  animation: wave 2s ease-in-out infinite;
+}

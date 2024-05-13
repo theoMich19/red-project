@@ -29,7 +29,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       },
     });
     let dataIsWordFound = await res2.json();
-    console.log("🚀 ~ loader ~ dataIsWordFound:", dataIsWordFound)
     isWordFound = dataIsWordFound.isWordFound
   }
 
@@ -93,7 +92,7 @@ export default function GameDay() {
 
                 </div>
 
-                <Link to={'/game-mod'}>
+                <Link to={'/game-list'}>
                   <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                 </Link>
               </div>

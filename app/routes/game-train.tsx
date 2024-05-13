@@ -17,13 +17,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const user = await getUser(request);
 
     const secretWords = [
-        "MAINS", "PORTE", "VOILE", "ROUGE", "VERT", "IMAGE", "ROUTE", "TITRE", "FORME", "LIVRE",
-        "CHIEN", "CHAT", "TABLE", "FRUIT", "BALLE", "NOIRE", "CRÈME", "MÉTAL", "VERRE", "BOITE",
-        "FINIR", "LASER", "SABLE", "DOUCE", "PEINE", "ÉCRAN", "HERBE", "MIEUX", "RAPIDE", "LOURD",
-        "POMME", "SINGE", "LAMPE", "ROBE", "PERLE", "GRAIN", "CREUX", "VAGUE", "PENTE", "VOIX",
-        "CHOIX", "PLAGE", "ANCRE", "LOUPE", "TENTE", "JAUNE", "ÉTOLE", "TIGRE", "BRUIT", "MONTE",
-        "ÉPAIS", "FLUTE", "PIANO", "LIGNE", "DÉBAT", "SALUT", "LUEUR", "OMBRE", "SOUPE", "FERME"
-    ];
+        "ANGLE", "FRUIT", "BRÈVE", "TITRE", "BRUIT", "TAXER", "ULTRA", "BROUE", "LASER",
+        "LUEUR", "HORDE", "ÉCRAN", "ABOIE", "TRÊVE", "OVALE", "IMAGE", "XYSTE", "GAZON",
+        "ÉPAVE", "TRAIT", "MAINS", "JUMEL", "LAMPE", "ILEON", "MARNE", "NUAGE", "RANCE",
+        "MIEUX", "NERFS", "KILOS", "KÉPIR", "FLUTE", "PORTE", "PERLE", "VOIX", "DOUCE",
+        "XÉRUS", "POMME", "FAUNE", "VAGUE", "PEINE", "CHOIX", "GOÛTE", "HAUTE", "VERT",
+        "DENSE", "SONGE", "QUOTA", "VOILE", "CIRER", "VENIN", "FABLE", "FORME", "LIGNE",
+        "TIGRE", "ZESTE", "PIÈCE", "CHIEN", "MORUE", "OPERA", "PENTE", "REBUT", "SABLE",
+        "VEXER", "LOUPE", "SOUPE", "HUMUS", "ORAGE", "KRAAL", "ÉPAIS", "ROUTE", "LUXER",
+        "BALLE", "IDIOT", "SUCRE", "JODEL", "GORGE", "DÉBAT", "ANCRE", "GRAIN", "SALUT",
+        "CREUX", "FINIR", "TABLE", "DRAME", "COUDE", "PAUSE", "JASER", "HERBE", "ZONES",
+        "MÉTAL", "ÉTOLE", "WAGON", "TENTE", "JAUNE", "QUART", "CHAT", "BOITE", "ÉGIDE",
+        "PIANO", "ROBE", "WRAPS", "MONTE", "CRÈME", "OMBRE", "NOIRE", "LOUER", "PLAGE",
+        "QUÊTE", "USUEL", "LOURD", "FERME", "BRUME", "CRANE", "LIVRE", "ZEBRE", "INUIT",
+        "MODEM", "RAPIDE", "VERRE", "NOYER", "RENNE", "ARÊTE", "USURE", "VIVRE", "DEBUT",
+        "PORCS", "SINGE", "EXODE", "ROUGE", "YOGIS"
+    ]
+
 
 
     const listWords: any = dico;

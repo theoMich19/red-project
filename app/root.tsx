@@ -11,6 +11,7 @@ import {
   json,
   useLocation,
   useNavigation,
+  useRouteError,
 } from "@remix-run/react";
 import { Analytics } from "@vercel/analytics/react";
 import { ToastContainer } from "react-toastify";
@@ -18,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SpeedInsights } from "@vercel/speed-insights/remix"
 import EnigmaticLoader from "./components/common/loader/loader";
 import { useState } from "react";
+import ErrorComponent from "./components/common/error/error";
 
 
 export const links: LinksFunction = () => [
@@ -40,6 +42,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Enigmatique</title>
         <Meta />
         <Links />
       </head>
@@ -52,6 +55,25 @@ export default function App() {
         <Scripts />
         <LiveReload />
         <ToastContainer />
+      </body>
+    </html>
+  );
+}
+
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ErrorComponent error={error} />;
+        <Scripts />
       </body>
     </html>
   );

@@ -53,6 +53,9 @@ export default function Profile() {
         }
     };
 
+
+    const date = new Date(user.birthday).toLocaleDateString() !== "Invalide Date" ? `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}` : new Date(user.birthday.toString()).toLocaleDateString()
+
     return (
         <LayoutPage user={user}>
             <div className="flex flex-col items-center overflow-x-hidden h-full bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center pt-24">
@@ -85,7 +88,7 @@ export default function Profile() {
                             <motion.span className="text-sm"
                                 variants={itemVariants}
                             >
-                                Membre depuis le {new Date(user.birthday).toLocaleDateString()}
+                                Membre depuis le {date}
                             </motion.span>
                         </div>
                     </motion.div>

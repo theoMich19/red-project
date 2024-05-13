@@ -7,7 +7,6 @@ import { User } from '~/ts/user';
 const Navbar = ({ user }: { user: User | null }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-
     const connected = user && user?.pseudo !== "";
     const defaultStyleBtn = "w-full px-4 py-4 hover:text-orange-400 duration-300 ease-in-out transition-colors";
 

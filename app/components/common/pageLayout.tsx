@@ -1,6 +1,7 @@
 import { User } from "~/ts/user";
 import NavBar from "./navigation/navbar";
 
+
 export default function LayoutPage({ children, user = null }: { children?: any, user?: User | null }) {
     return (
         <div className="h-[100vh] w-[100vw] ">

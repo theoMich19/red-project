@@ -34,8 +34,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         "PORCS", "SINGE", "EXODE", "ROUGE", "YOGIS"
     ]
 
-
-
     const listWords: any = dico;
     const dicoUsed: Array<string> = listWords["five"]
 

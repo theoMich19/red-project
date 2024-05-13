@@ -45,7 +45,6 @@ export default function GameDay() {
   const [gameStatus, setGameStatus] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const fetcherWordFind = useFetcher()
-
   const handChageGameStatus = async (status: string) => {
     setGameStatus(status)
 
@@ -92,7 +91,7 @@ export default function GameDay() {
 
                 </div>
 
-                <Link to={'/game-list'}>
+                <Link to={'/game-mod'}>
                   <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                 </Link>
               </div>

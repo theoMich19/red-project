@@ -89,7 +89,7 @@ export default function Game() {
                                 transition={{ duration: 0.5 }}
                             >
                                 <div className="flex justify-between items-center w-full">
-                                    <div className="flex items-center gap-2 text-xl">
+                                    <div className="flex items-center gap-2 text-xl max-md:text-base">
                                         {gameSelected.icon}
                                         <h2>{gameSelected.title}</h2>
                                     </div>
@@ -97,8 +97,7 @@ export default function Game() {
                                         <X size={24} />
                                     </button>
                                 </div>
-                                <p>{gameSelected.content}</p>
-
+                                <p className="text-lg max-md:text-sm">{gameSelected.content}</p>
                                 {
                                     gameSelected.link !== "" ?
                                         (<Link to={gameSelected.link.toString()}>

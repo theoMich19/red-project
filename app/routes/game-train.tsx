@@ -17,10 +17,24 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const user = await getUser(request);
 
     const secretWords = [
-        "MAINS", "PORTE", "VOILE", "ROUGE", "VERT", "IMAGE", "ROUTE", "TITRE", "FORME", "LIVRE",
-        "CHIEN", "CHAT", "TABLE", "FRUIT", "BALLE", "NOIRE", "CRÈME", "MÉTAL", "VERRE", "BOITE",
-        "FINIR", "LASER", "SABLE", "DOUCE", "PEINE", "ÉCRAN", "HERBE", "MIEUX", "RAPIDE", "LOURD"
+        "ANGLE", "FRUIT", "BRÈVE", "TITRE", "BRUIT", "TAXER", "ULTRA", "BROUE", "LASER",
+        "LUEUR", "HORDE", "ÉCRAN", "ABOIE", "TRÊVE", "OVALE", "IMAGE", "XYSTE", "GAZON",
+        "ÉPAVE", "TRAIT", "MAINS", "JUMEL", "LAMPE", "ILEON", "MARNE", "NUAGE", "RANCE",
+        "MIEUX", "NERFS", "KILOS", "KÉPIR", "FLUTE", "PORTE", "PERLE", "VOIX", "DOUCE",
+        "XÉRUS", "POMME", "FAUNE", "VAGUE", "PEINE", "CHOIX", "GOÛTE", "HAUTE", "VERT",
+        "DENSE", "SONGE", "QUOTA", "VOILE", "CIRER", "VENIN", "FABLE", "FORME", "LIGNE",
+        "TIGRE", "ZESTE", "PIÈCE", "CHIEN", "MORUE", "OPERA", "PENTE", "REBUT", "SABLE",
+        "VEXER", "LOUPE", "SOUPE", "HUMUS", "ORAGE", "KRAAL", "ÉPAIS", "ROUTE", "LUXER",
+        "BALLE", "IDIOT", "SUCRE", "JODEL", "GORGE", "DÉBAT", "ANCRE", "GRAIN", "SALUT",
+        "CREUX", "FINIR", "TABLE", "DRAME", "COUDE", "PAUSE", "JASER", "HERBE", "ZONES",
+        "MÉTAL", "ÉTOLE", "WAGON", "TENTE", "JAUNE", "QUART", "CHAT", "BOITE", "ÉGIDE",
+        "PIANO", "ROBE", "WRAPS", "MONTE", "CRÈME", "OMBRE", "NOIRE", "LOUER", "PLAGE",
+        "QUÊTE", "USUEL", "LOURD", "FERME", "BRUME", "CRANE", "LIVRE", "ZEBRE", "INUIT",
+        "MODEM", "RAPIDE", "VERRE", "NOYER", "RENNE", "ARÊTE", "USURE", "VIVRE", "DEBUT",
+        "PORCS", "SINGE", "EXODE", "ROUGE", "YOGIS"
     ]
+
+
 
     const listWords: any = dico;
     const dicoUsed: Array<string> = listWords["five"]
@@ -110,7 +124,7 @@ export default function GameTrain() {
                 {
                     errorSecretWord && (
                         <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] mt-[20vh]">
-                            <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-md text-sm">
+                            <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-base text-sm">
                                 <div className="flex flex-col">
                                     <h1 className="text-lg md:text-2xl font-bold">{errorSecretWord}</h1>
                                 </div>

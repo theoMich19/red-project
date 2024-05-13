@@ -44,9 +44,6 @@ export default function Login() {
 
     return (
         <LayoutPage user={user}>
-            <div className="absolute top-16 left-0 right-0 bg-red-500 text-white text-center py-2 z-0">
-                Cette page est en construction
-            </div>
             <div className="flex flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}

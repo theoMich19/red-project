@@ -80,7 +80,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                     {connected ? (
                         <div className="relative">
                             <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="px-4 py-2 hover:bg-gray-700 rounded focus:outline-none focus:shadow-outline">
-                                Profile
+                                Mon Profil
                             </button>
                             <AnimatePresence>
                                 {isProfileOpen && (
@@ -91,7 +91,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                         animate="open"
                                         exit="closed"
                                     >
-                                        <Link to={`/users/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
+                                        <Link to={`/users/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profil</Link>
                                         <Form action="/logout" method="post" className="w-full">
                                             <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
                                         </Form>

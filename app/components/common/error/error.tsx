@@ -51,7 +51,10 @@ const ErrorComponent = ({ error }: any) => {
             <Link to="/" className="mt-4 px-6 py-2 border border-white rounded text-white hover:bg-white hover:text-black transition-all duration-300 ease-in-out">
                 Revenir à l'accueil
             </Link>
-            <span>Si le problème persite rendez vous sur ce lien https://www.facebook.com/people/Enigmatique/61559695619211/</span>
+            <span className="mt-4 text-sm text-gray-300 block text-center">
+                Si le problème persiste rendez-vous sur ce <a href="https://www.facebook.com/people/Enigmatique/61559695619211/" className="font-bold underline text-teal-400 hover:text-teal-300 transition-colors">lien</a>.
+            </span>
+
         </motion.div>
     );
 };

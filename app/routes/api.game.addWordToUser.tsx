@@ -8,7 +8,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 
     const formData = await request.formData()
-    const response = await fetch(`${process.env.REST_URL_API}/user/add-word `, {
+    const response = await fetch(`${process.env.REST_URL_API}/users/add-word `, {
         method: "post",
         headers: {
             Accept: "application/json",
@@ -20,3 +20,4 @@ export async function action({ request }: ActionFunctionArgs) {
     const result = await response.json()
     return result
 }
+

@@ -56,7 +56,9 @@ const Navbar = ({ user }: { user: User | null }) => {
     return (
         <nav className="bg-transparent text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <h1 className="max-md:text-5xl text-3xl font-bold" style={{ fontFamily: "Island Moments" }}>Enigmatique</h1>
+                <Link to={"/"}>
+                    <h1 className="max-md:text-5xl text-3xl font-bold" style={{ fontFamily: "Island Moments" }}>Enigmatique</h1>
+                </Link>
                 <motion.button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="lg:hidden px-2 py-1 text-white"
@@ -72,8 +74,8 @@ const Navbar = ({ user }: { user: User | null }) => {
                     </svg>
                 </motion.button>
                 <div className="hidden lg:flex space-x-4 items-center">
-                    <Link to={'/game-day'} className="px-4 py-2 hover:bg-gray-700 rounded">Game-Day</Link>
-                    <Link to={'/game-mod'} className="px-4 py-2 hover:bg-gray-700 rounded">More games</Link>
+                    <Link to={'/game-day'} className="px-4 py-2 hover:bg-gray-700 rounded">Mot du jour</Link>
+                    <Link to={'/game-mod'} className="px-4 py-2 hover:bg-gray-700 rounded">Plus de jeu</Link>
                     <Link to={"/information"} className="px-4 py-2 hover:bg-gray-700 rounded">Information</Link>
                     {connected ? (
                         <div className="relative">
@@ -89,7 +91,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                         animate="open"
                                         exit="closed"
                                     >
-                                        <Link to={`/user/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
+                                        <Link to={`/users/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profile</Link>
                                         <Form action="/logout" method="post" className="w-full">
                                             <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
                                         </Form>
@@ -110,8 +112,8 @@ const Navbar = ({ user }: { user: User | null }) => {
                             animate="open"
                             exit="closed"
                         >
-                            <Link to={'/game-day'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Game-Day</Link>
-                            <Link to={'/game-mod'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>More games</Link>
+                            <Link to={'/game-day'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Mot du jour</Link>
+                            <Link to={'/game-mod'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Plus de jeu</Link>
                             <Link to={"/information"} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Information</Link>
                             {connected ? (
                                 <>
@@ -127,7 +129,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                                 animate="open"
                                                 exit="closed"
                                             >
-                                                <Link to={`/user/${user.id}`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mon Profile</Link>
+                                                <Link to={`/users/${user.id}`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mon Profile</Link>
                                                 <Form action="/logout" method="post" className="w-full">
                                                     <button type="submit" className="w-full px-4 py-2 text-base  hover:bg-gray-100">Déconnexion</button>
                                                 </Form>

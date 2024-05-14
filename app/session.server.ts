@@ -73,6 +73,15 @@ export async function getUser(request: Request) {
   throw await logout(request);
 }
 
+export async function getUserId(request: Request) {
+  const user = await getUser(request);
+  if (user.id) {
+    return user.id;
+  }
+
+  throw await logout(request);
+}
+
 export async function updateUserSession({
   request,
   sessionKey,

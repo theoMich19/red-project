@@ -81,3 +81,7 @@ body {
 .animate-wave > div {
   animation: wave 2s ease-in-out infinite;
 }
+
+.dateInput::-webkit-calendar-picker-indicator {
+  display: none;
+}

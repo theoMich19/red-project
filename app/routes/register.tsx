@@ -4,7 +4,7 @@ import { useState } from "react";
 import LayoutPage from "~/components/common/pageLayout";
 import { createUserSession } from "~/session.server";
 import { motion } from 'framer-motion'; // Import motion
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LoaderCircle } from "lucide-react";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
@@ -113,8 +113,14 @@ export default function Register() {
                             {actionData?.errors?.message && (
                                 <div className="pt-1 text-red-700">{actionData.errors.message}</div>
                             )}
-                            <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-2.5 text-center transition-colors duration-300 ease-in-out">
-                                S'inscrire
+                            <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-3 text-center transition-colors duration-300 ease-in-out">
+                                {
+                                    loading
+                                        ? <span className="flex gap-2 items-center justify-center">
+                                            <LoaderCircle className="spinLoaderBtn" />Enregistremement ...
+                                        </span>
+                                        : "S'inscrire"
+                                }
                             </button>
                             <p className="text-sm font-light text-gray-500">
                                 Déjà un compte ? <Link to={"/login"} className="font-medium text-primary hover:underline">Se connecter</Link>

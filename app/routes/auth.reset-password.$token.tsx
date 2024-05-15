@@ -5,7 +5,7 @@ import { createUserSession, getUser } from "~/session.server";
 import { User } from "~/ts/user";
 import { motion } from 'framer-motion'; // Import motion
 import { useState } from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LoaderCircle } from "lucide-react";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
     const formData = await request.formData();
@@ -48,7 +48,7 @@ export default function ResetPassword() {
                 >
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                            Mot de passe oublier
+                            Mot de passe oublié
                         </h1>
                         <Form method="post" className="space-y-4 md:space-y-6">
                             <div>
@@ -92,10 +92,16 @@ export default function ResetPassword() {
                                 </div>
                             </div>
                             {actionData?.errors?.message && (
-                                <div className="pt-1 text-red-700">{actionData.errors.message}</div>
+                                <div className="text-sm font-light text-red-700">{actionData.errors.message}</div>
                             )}
-                            <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-2.5 text-center transition-colors duration-300 ease-in-out">
-                                Sauvegarder
+                            <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-3 text-center transition-colors duration-300 ease-in-out">
+                                {
+                                    loading
+                                        ? <span className="flex gap-2 items-center justify-center">
+                                            <LoaderCircle className="spinLoaderBtn" />Sauvegarde ...
+                                        </span>
+                                        : "Sauvegarder"
+                                }
                             </button>
                             <p className="text-sm font-light text-gray-500">
                                 Déjà un compte ? <Link to={"/login"} className="font-medium text-primary hover:underline">Se connecter</Link>

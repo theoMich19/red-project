@@ -85,3 +85,16 @@ body {
 .dateInput::-webkit-calendar-picker-indicator {
   display: none;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinLoaderBtn {
+  animation: spin 1s linear infinite;
+}

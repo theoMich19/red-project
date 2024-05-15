@@ -12,27 +12,56 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface useLoaderDataType { user: User, dicoUsed: Array<string>, secretWords: Array<string> }
 
+const start = [
+    "CHAT", "MAISON", "ARBRE", "LIVRE", "SOLEIL", "CHIEN", "ROUGE", "VOITURE",
+    "EAU", "FLEUR", "POMME", "TABLE", "FENÊTRE", "SOURIS", "JARDIN", "CIEL",
+    "MER", "NUIT", "JOUR", "PAIN", "LUNE", "CHAPEAU", "CHEMISE", "OISEAU",
+    "MONTAGNE", "RIVIÈRE", "PLAGE", "VILLE", "FORÊT", "NEIGE"
+]
+
+const inter = [
+    "BOUSSOLE", "ÉQUATEUR", "PHILOSOPHIE", "CONSTITUTION", "MÉTAPHORE", "OXYGÈNE",
+    "BIODIVERSITÉ", "DÉMOCRATIE", "NEURONE", "ISOTOPE", "SATELLITE", "PROTÉINE",
+    "MAGMA", "CHLOROPHYLLE", "BIOPSIE", "ALLÉGORIE", "HÉMISPHÈRE", "PARADOXE",
+    "CYNISME", "KINÉSITHÉRAPIE", "POLYGONE", "RHIZOME", "TECTONIQUE", "ANTHROPOLOGIE",
+    "BIOCHIMIE", "CARTOGRAPHIE", "DENDROCHRONOLOGIE", "ÉPIPHANIE", "FLUORESCENCE", "GÉOSTATIONNAIRE"
+]
+
+const expert = [
+    "PRÉTÉRITION", "CALLIPYGE", "INEXORABLE", "PLÉTHORE", "MELLIFLU", "APOCRYPHE",
+    "SUBJUGUER", "PHILATÉLIE", "ÉTHÉRÉ", "PROPÉDEUTIQUE", "OBOMBRATION", "PÉTRICHOR",
+    "ANTÉPÉNULTIÈME", "SPHÉROPHÉRIQUE", "TRAGELAPHUS", , "ESCARBILLE", "ÉGRÉGORE", "MYRMÉCOPHILE",
+    "ONOMATOPÉE", "XÉNOPHOBIE", "ZIGGOURAT", "QUINTESSENCE", "RÉIFICATION", "SYLLOGISME",
+    "TRANSSUBSTANTIATION", "ULTRACREPIDARIANISME", "VEXILLOLOGIE", "WOLFRAMITE"
+]
+
+const impossible = [
+    "HIPPOPOTOMONSTROSESQUIPPEDALIOPHOBIE",
+    "PNEUMONOULTRAMICROSCOPICSILICOVOLCANOCONIOSIS"
+]
+
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const user = await getUser(request);
 
     const secretWords = [
-        "ANGLE", "FRUIT", "BRÈVE", "TITRE", "BRUIT", "TAXER", "ULTRA", "BROUE", "LASER",
-        "LUEUR", "HORDE", "ÉCRAN", "ABOIE", "TRÊVE", "OVALE", "IMAGE", "XYSTE", "GAZON",
-        "ÉPAVE", "TRAIT", "MAINS", "JUMEL", "LAMPE", "ILEON", "MARNE", "NUAGE", "RANCE",
-        "MIEUX", "NERFS", "KILOS", "KÉPIR", "FLUTE", "PORTE", "PERLE", "VOIX", "DOUCE",
-        "XÉRUS", "POMME", "FAUNE", "VAGUE", "PEINE", "CHOIX", "GOÛTE", "HAUTE", "VERT",
-        "DENSE", "SONGE", "QUOTA", "VOILE", "CIRER", "VENIN", "FABLE", "FORME", "LIGNE",
-        "TIGRE", "ZESTE", "PIÈCE", "CHIEN", "MORUE", "OPERA", "PENTE", "REBUT", "SABLE",
-        "VEXER", "LOUPE", "SOUPE", "HUMUS", "ORAGE", "KRAAL", "ÉPAIS", "ROUTE", "LUXER",
-        "BALLE", "IDIOT", "SUCRE", "JODEL", "GORGE", "DÉBAT", "ANCRE", "GRAIN", "SALUT",
-        "CREUX", "FINIR", "TABLE", "DRAME", "COUDE", "PAUSE", "JASER", "HERBE", "ZONES",
-        "MÉTAL", "ÉTOLE", "WAGON", "TENTE", "JAUNE", "QUART", "CHAT", "BOITE", "ÉGIDE",
-        "PIANO", "ROBE", "WRAPS", "MONTE", "CRÈME", "OMBRE", "NOIRE", "LOUER", "PLAGE",
-        "QUÊTE", "USUEL", "LOURD", "FERME", "BRUME", "CRANE", "LIVRE", "ZEBRE", "INUIT",
-        "MODEM", "RAPIDE", "VERRE", "NOYER", "RENNE", "ARÊTE", "USURE", "VIVRE", "DEBUT",
-        "PORCS", "SINGE", "EXODE", "ROUGE", "YOGIS"
+        "ANGLE", "FRUIT", "TITRE", "BRUIT", "TAXER", "ULTRA", "LASER", "LIGNE",
+        "LUEUR", "HORDE", "ÉCRAN", "ABOIE", "TRÊVE", "OVALE", "IMAGE", "GAZON",
+        "ÉPAVE", "TRAIT", "MAINS", "LAMPE", "ILEON", "MARNE", "NUAGE", "RANCE",
+        "MIEUX", "NERFS", "KILOS", "FLUTE", "PORTE", "PERLE", "VOIX", "DOUCE",
+        "POMME", "FAUNE", "VAGUE", "PEINE", "CHOIX", "GOÛTE", "HAUTE", "VERT",
+        "DENSE", "SONGE", "QUOTA", "VOILE", "CIRER", "VENIN", "FABLE", "FORME",
+        "TIGRE", "ZESTE", "PIÈCE", "CHIEN", "MORUE", "OPERA", "PENTE", "REBUT",
+        "VEXER", "LOUPE", "SOUPE", "ORAGE", "ÉPAIS", "ROUTE", "LUXER", "ZONES",
+        "BALLE", "IDIOT", "SUCRE", "GORGE", "DÉBAT", "ANCRE", "GRAIN", "SALUT",
+        "CREUX", "FINIR", "TABLE", "DRAME", "COUDE", "PAUSE", "JASER", "HERBE",
+        "MÉTAL", "ÉTOLE", "WAGON", "TENTE", "JAUNE", "QUART", "CHAT", "BOITE",
+        "PIANO", "ROBE", "WRAPS", "MONTE", "CRÈME", "OMBRE", "NOIRE", "LOUER",
+        "QUÊTE", "USUEL", "LOURD", "FERME", "BRUME", "CRANE", "LIVRE", "ZEBRE",
+        "MODEM", "RAPIDE", "VERRE", "NOYER", "RENNE", "USURE", "VIVRE", "DEBUT",
+        "PORCS", "SINGE", "ROUGE", "SABLE", "ÉGIDE", "PLAGE", "INUIT",
     ]
+
 
     const listWords: any = dico;
     const dicoUsed: Array<string> = listWords["five"]
@@ -43,6 +72,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function GameTrain() {
     let { user, dicoUsed, secretWords }: useLoaderDataType = useLoaderData();
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
+    const [wordsFoundCount, setWordsFoundCount] = useState(0);
     const [gameStatus, setGameStatus] = useState<string>("");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -52,6 +82,7 @@ export default function GameTrain() {
             const nextIndex = currentWordIndex + 1;
             setCurrentWordIndex(nextIndex);
             setGameStatus("")
+            if (gameStatus == "won") setWordsFoundCount(wordsFoundCount + 1);
         }
     }
 
@@ -109,14 +140,18 @@ export default function GameTrain() {
                     </div>
                 </motion.div>
             </AnimatePresence>)}
-            <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center">
+            <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center">
                 {!gameStatus &&
-                    (<GameBoard
-                        dicoUsed={dicoUsed}
-                        secretWord={secretWords[currentWordIndex]}
-                        handChageGameStatus={setGameStatus}
-                        setIsOpen={setIsOpen}
-                        isRestAvaliable={true} />
+                    (
+                        <div className="mt-[20vh]">
+                            <span className="text-lg text-center p-2 text-white">Mots trouvés : {wordsFoundCount}</span>
+                            <GameBoard
+                                dicoUsed={dicoUsed}
+                                secretWord={secretWords[currentWordIndex]}
+                                handChageGameStatus={setGameStatus}
+                                setIsOpen={setIsOpen}
+                                isRestAvaliable={true} />
+                        </div>
                     )
                 }
                 {

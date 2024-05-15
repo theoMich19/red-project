@@ -66,7 +66,7 @@ export default function GameBoard({ dicoUsed, secretWord, isRestAvaliable = fals
 
     return (
         <>
-            <div className="flex flex-col items-center mt-[20vh]">
+            <div className="flex flex-col items-center">
                 <PreviousAttempts allAttemps={allAttemps} secretWord={secretWord} />
                 <div className="space-x-2 flex mt-2">
                     {inputs.map((input, index) => (

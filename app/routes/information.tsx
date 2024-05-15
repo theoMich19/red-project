@@ -43,7 +43,7 @@ export default function Information() {
 
     return (
         <LayoutPage user={user}>
-            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
+            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
                 {cards.map((card: any) => (
                     <motion.div
                         key={card.id}

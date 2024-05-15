@@ -4,16 +4,22 @@ import { useState } from "react";
 import LayoutPage from "~/components/common/pageLayout";
 import { createUserSession } from "~/session.server";
 import { motion } from 'framer-motion'; // Import motion
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const password = formData.get("password") as string;
-
+    const confirmPassword = formData.get('confirm-password');
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
     if (!passwordRegex.test(password)) {
         return json({ errors: { message: "Le mot de passe ne respecte pas les critères requis." } }, { status: 400 });
     }
+
+    if (password !== confirmPassword) {
+        return json({ errors: { message: "Les mots de passe ne correspondent pas." } }, { status: 400 })
+    }
+
 
     const apiRegister = await fetch(`${process.env.REST_URL_API}/register`, {
         method: "POST",
@@ -40,6 +46,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function Register() {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigation = useNavigation();
     const actionData = useActionData<typeof action>();
     const loading = navigation.state === "idle" ? false : true;
@@ -67,20 +75,40 @@ export default function Register() {
                                 <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5" />
                             </div>
                             <div>
-                                <label id="password" className="block mb-2 text-sm font-medium text-gray-900">Mot de passe</label>
-                                <input type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5" />
+                                <label className="block mb-2 text-sm font-medium text-gray-900">Mot de passe</label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        id="password"
+                                        required
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                                    />
+                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                        <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                                            {showPassword ? <EyeOffIcon className="h-5 w-5 text-gray-700" /> : <EyeIcon className="h-5 w-5 text-gray-700" />}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div>
-                                <label id="confirm-password" className="block mb-2 text-sm font-medium text-gray-900">Confirmation</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                    title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, et un chiffre."
-                                    required
-                                />
+                                <label className="block mb-2 text-sm font-medium text-gray-900">Confirmation</label>
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        name="confirm-password"
+                                        id="confirm-password"
+                                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                        title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, et un chiffre."
+                                        required
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                                    />
+                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                        <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                            {showConfirmPassword ? <EyeOffIcon className="h-5 w-5 text-gray-700" /> : <EyeIcon className="h-5 w-5 text-gray-700" />}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             {actionData?.errors?.message && (
                                 <div className="pt-1 text-red-700">{actionData.errors.message}</div>
@@ -89,7 +117,7 @@ export default function Register() {
                                 S'inscrire
                             </button>
                             <p className="text-sm font-light text-gray-500">
-                                Déjà un compte? <Link to={"/login"}><span className="font-medium text-primary hover:underline">Se connecter</span></Link>
+                                Déjà un compte ? <Link to={"/login"} className="font-medium text-primary hover:underline">Se connecter</Link>
                             </p>
                         </Form>
                     </div>

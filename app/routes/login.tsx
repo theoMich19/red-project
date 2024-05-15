@@ -3,9 +3,9 @@ import { Form, Link, useActionData, useLoaderData, useNavigation } from "@remix-
 import LayoutPage from "~/components/common/pageLayout";
 import { createUserSession, getUser } from "~/session.server";
 import { User } from "~/ts/user";
-import { motion } from 'framer-motion'; // Import motion
+import { motion } from 'framer-motion';
 import { useState } from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, LoaderCircle } from "lucide-react";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
@@ -81,14 +81,20 @@ export default function Login() {
                                 </div>
                             </div>
                             {actionData?.errors?.message && (
-                                <div className="pt-1 text-red-700">{actionData.errors.message}</div>
+                                <div className="text-sm font-light text-red-700">{actionData.errors.message}</div>
                             )}
                             <div className="flex flex-col">
-                                <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-2.5 text-center transition-colors duration-300 ease-in-out">
-                                    Se connecter
+                                <button type="submit" disabled={loading} className="w-full text-primary font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-3 text-center transition-colors duration-300 ease-in-out">
+                                    {
+                                        loading
+                                            ? <span className="flex gap-2 items-center justify-center">
+                                                <LoaderCircle className="spinLoaderBtn" />Connection ...
+                                            </span>
+                                            : "Se connecter"
+                                    }
                                 </button>
                                 <Link to={"/auth/forget-password"} className="text-sm font-medium text-primary hover:underline text-right">
-                                    Mot de passe oublier ?
+                                    Mot de passe oublié ?
                                 </Link>
                             </div>
                             <p className="text-sm font-light text-gray-500">

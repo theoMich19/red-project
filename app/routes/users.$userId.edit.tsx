@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react";
 import { motion } from "framer-motion";
-import { Award, Cake, CalendarDays, Mail, Pencil } from "lucide-react";
+import { Award, Cake, CalendarDays, LoaderCircle, Mail, Pencil } from "lucide-react";
 import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUserId } from "~/session.server";
 import { User } from "~/ts/user";
@@ -89,6 +89,9 @@ export default function Profile() {
                     animate="visible"
                     variants={containerVariants}
                 >
+                    <motion.div>
+                        <span>Modifier le profil</span>
+                    </motion.div>
                     <Form method="put" className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 m-4 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
                         style={{ backdropFilter: 'blur(10px)' }}
                     >
@@ -113,15 +116,23 @@ export default function Profile() {
                                 <span className="flex gap-2 items-center">
                                     <Cake size={20} color="white" /> Date de naissance
                                 </span>
-                                <input type="date" name="birthday" defaultValue={formatDate(user.birthday, "YYYY-MM-DD")} className="relative bg-transparent border-none text-white dateInput" required />
-                                <CalendarDays size={20} className="absolute left-[22%] top-[57%] pointer-events-none color-white" />
+                                <input type="date" name="birthday" required
+                                    defaultValue={formatDate(user.birthday, "YYYY-MM-DD")}
+                                    className="relative bg-transparent border-none text-white dateInput" />
+                                {/* <CalendarDays size={20} className="absolute left-[22%] top-[57%] pointer-events-none color-white" /> */}
                             </label>
                             <label className="flex flex-col w-full">
                                 <span className="flex gap-2 items-center"><Mail size={20} /> Email</span>
                                 <input type="email" name="email" defaultValue={user.email} className="bg-transparent border-none text-white" required />
                             </label>
-                            <button type="submit" disabled={loading} className="w-full text-white font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-2.5 text-center transition-colors duration-300 ease-in-out">
-                                Sauvegarder
+                            <button type="submit" disabled={loading} className="w-full text-white font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg px-5 py-3 text-center transition-colors duration-300 ease-in-out">
+                                {
+                                    loading
+                                        ? <span className="flex gap-2 items-center justify-center">
+                                            <LoaderCircle className="spinLoaderBtn" />Sauvegarde ...
+                                        </span>
+                                        : "Sauvegarder"
+                                }
                             </button>
                         </div>
                     </Form>

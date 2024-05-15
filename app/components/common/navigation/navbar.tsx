@@ -75,7 +75,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                 </motion.button>
                 <div className="hidden lg:flex space-x-4 items-center">
                     <Link to={'/game-day'} className="px-4 py-2 hover:bg-gray-700 rounded">Mot du jour</Link>
-                    <Link to={'/game-mod'} className="px-4 py-2 hover:bg-gray-700 rounded">Plus de jeu</Link>
+                    <Link to={'/game-mod'} className="px-4 py-2 hover:bg-gray-700 rounded">Plus de jeux</Link>
                     <Link to={"/information"} className="px-4 py-2 hover:bg-gray-700 rounded">Information</Link>
                     {connected ? (
                         <div className="relative">
@@ -113,7 +113,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                             exit="closed"
                         >
                             <Link to={'/game-day'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Mot du jour</Link>
-                            <Link to={'/game-mod'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Plus de jeu</Link>
+                            <Link to={'/game-mod'} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Plus de jeux</Link>
                             <Link to={"/information"} className={`${defaultStyleBtn} ${isProfileOpen ? "text-gray-500" : ""}`}>Information</Link>
                             {connected ? (
                                 <>

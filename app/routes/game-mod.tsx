@@ -50,7 +50,7 @@ export default function Game() {
 
     return (
         <LayoutPage user={user}>
-            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fondLogin.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
+            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
                 {gamesInfo.map((game: any) => (
                     <motion.div
                         key={game.id}

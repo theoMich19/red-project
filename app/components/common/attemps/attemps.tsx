@@ -4,7 +4,7 @@ export const PreviousAttempts = ({ allAttemps, secretWord }: { allAttemps: Array
     return (
         <>
             {allAttemps.map((attempt, attemptIndex) => (
-                <div key={attemptIndex} className="flex mt-2 space-x-2">
+                <div key={attemptIndex} className="flex max-md:space-x-[2px] space-x-2  mt-2">
                     {attempt.map((letter, letterIndex) => (
                         <div
                             key={letterIndex}
@@ -33,7 +33,7 @@ export const RemainingAttempts = ({ remainingAttempts, wordLength }: { remaining
     return (
         <div className="flex flex-col">
             {[...Array(remainingAttempts)].map((_, attemptIndex) => (
-                <div key={attemptIndex} className="flex mt-2 space-x-2">
+                <div key={attemptIndex} className="flex max-md:space-x-[2px] space-x-2  mt-2">
                     {[...Array(wordLength)].map((_, letterIndex) => (
                         <div
                             key={letterIndex}

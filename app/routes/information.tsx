@@ -43,71 +43,39 @@ export default function Information() {
 
     return (
         <LayoutPage user={user}>
-            <div className="flex max-sm:flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
-                {cards.map((card: any) => (
+            <div className="flex max-lg:flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
+                {cards.map(card =>
                     <motion.div
-                        key={card.id}
-                        layoutId={card.id}
-                        onClick={() => setSelectedId(card.id)}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        className="flex flex-col bg-white p-8 rounded-lg shadow-lg items-center gap-4 w-[40vw] h-[40vh] max-md:w-full"
+                        initial={{ opacity: 0, scale: 0.75 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.5 }}
-                        className="cursor-pointer p-4 bg-white rounded-lg shadow-lg min-w-[300px] text-center"
                     >
-                        <div className="flex items-center gap-2 text-2xl font-bold text-slate-700">
-                            {card.icon}
-                            <motion.h1>{card.title}</motion.h1>
+                        <div className="flex justify-between items-center w-full">
+                            <div className="flex items-center gap-2 text-xl">
+                                {card?.icon}
+                                <h1 className="text-2xl max-lg:text-sm font-bold">{card?.title}</h1>
+                            </div>
+                            <button onClick={() => setSelectedId(null)} className="p-2">
+                                <X size={24} />
+                            </button>
+                        </div>
+                        <div className="flex flex-col items-start text-xl">
+                            <span className="text-lg max-md:text-sm overflow-auto">{card?.content}</span>
+                            {card.id === 'how-to-play' && (
+                                <div className="text-lg max-md:text-sm overflow-auto">
+                                    {card?.subContent?.map((item: any) => (
+                                        <div key={item.key} className="flex items-center gap-2 my-2">
+                                            <span className={`${item.bgColor} px-2 py-1 border rounded-lg font-bold max-md:self-start`}>A</span>
+                                            <span>{item.text}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </motion.div>
-                ))}
-
-                <AnimatePresence>
-                    {selectedId && (
-                        <>
-                            <motion.div
-                                className="fixed inset-0 bg-black bg-opacity-50 z-20"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                                onClick={() => setSelectedId(null)}
-                            />
-                            <motion.div
-                                layoutId={selectedId}
-                                className="fixed inset-0 bg-white p-8 m-auto rounded-lg shadow-lg flex flex-col items-center z-30 gap-4"
-                                style={{ maxWidth: '600px', width: '80vw', maxHeight: '50vh' }}
-                                initial={{ opacity: 0, scale: 0.75 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.5 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <div className="flex justify-between items-center w-full">
-                                    <div className="flex items-center gap-2 text-xl">
-                                        {cardSelected?.icon}
-                                        <h1 className="md:text-2xl text-sm font-bold">{cardSelected?.title}</h1>
-                                    </div>
-                                    <button onClick={() => setSelectedId(null)} className="p-2">
-                                        <X size={24} />
-                                    </button>
-                                </div>
-                                <div className="flex flex-col items-start text-xl">
-                                    <span className="text-lg max-md:text-sm overflow-auto">{cardSelected?.content}</span>
-                                    {selectedId === 'how-to-play' && (
-                                        <div className="text-lg max-md:text-sm overflow-auto">
-                                            {cardSelected?.subContent?.map((item: any) => (
-                                                <div key={item.key} className="flex items-center gap-2 my-2">
-                                                    <span className={`${item.bgColor} px-2 py-1 border rounded-lg font-bold max-md:self-start`}>A</span>
-                                                    <span>{item.text}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </motion.div>
-                        </>
-                    )}
-                </AnimatePresence>
+                )}
             </div>
         </LayoutPage>
     );

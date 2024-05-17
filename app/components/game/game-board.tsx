@@ -68,7 +68,7 @@ export default function GameBoard({ dicoUsed, secretWord, isRestAvaliable = fals
         <>
             <div className="flex flex-col items-center">
                 <PreviousAttempts allAttemps={allAttemps} secretWord={secretWord} />
-                <div className="space-x-2 flex mt-2">
+                <div className="max-md:space-x-[2px] space-x-2 flex mt-2">
                     {inputs.map((input, index) => (
                         <input
                             key={index} // modifier la key car index de loupe ne peut etre traité correctement par react

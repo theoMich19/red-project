@@ -65,95 +65,97 @@ export default function Profile() {
 
     return (
         <LayoutPage user={user}>
-            <motion.div className="flex flex-col items-center overflow-x-hidden h-full"
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-            >
-                <motion.div className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
-                    style={{ backdropFilter: 'blur(10px)' }}
-                >
-                    <motion.img
-                        src={"/images/avatar/avatar_1.jpg"}
-                        alt="User Avatar"
-                        className="mb-4 w-32 h-32 rounded-full"
-                        initial={{ scale: 0 }}
-                        animate={{ rotate: 360, scale: 1 }}
-                        transition={{
-                            type: 'spring',
-                            stiffness: 260,
-                            damping: 20
-                        }}
-                    />
-                    <div className="flex flex-col gap-2 text-start w-full">
-                        <motion.h2 className="text-2xl font-bold flex items-center justify-between w-full"
-                            variants={itemVariants}
-                        >
-                            {user.pseudo}
-                            <Link to={`/users/${user.id}/edit`} className="opacity-50 hover:opacity-100 transition-opacity justify-between">
-                                <motion.div
-                                    className="flex items-center gap-2 p-1 rounded hover:bg-gray-700 hover:opacity-75 cursor-pointer "
-                                    initial={{ scale: 0.95 }}
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ type: 'spring', stiffness: 300 }}
-                                >
-                                    <Pencil size={16} className="text-white" />
-                                    <span className="text-sm text-white">Modifier</span>
-                                </motion.div>
-                            </Link>
-                        </motion.h2>
-                        <motion.span className="flex gap-4 items-center text-sm"
-                            variants={itemVariants}
-                        >
-                            <Award size={20} />
-                            Membre depuis le {formatDate(user.created_at)}
-                        </motion.span>
-                        {
-                            formatDate(user.birthday) && (
-                                < motion.span className="flex gap-4 items-center text-sm"
-                                    variants={itemVariants}
-                                >
-                                    <Cake size={20} />
-                                    Née le  {formatDate(user.birthday)}
-                                </motion.span>
-                            )
-                        }
-                    </div>
-                </motion.div>
-                <motion.div className="flex justify-evenly gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+            <div className="flex flex-col h-full items-center justify-center ">
+                <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh]"
+                    initial="hidden"
+                    animate="visible"
                     variants={containerVariants}
                 >
-                    <div className="flex flex-col items-center text-center opacity-80">
-                        <motion.span className="flex justify-center text-center gap-4"><SearchCheck size={20} />Mots trouvés </motion.span>
-                        <motion.span variants={itemVariants}>{wordsFoundList.length}</motion.span>
-                    </div>
-                    <div className="flex flex-col items-center text-center opacity-80">
-                        <motion.span className="flex justify-center text-center gap-4"><UsersRound size={20} />Amis</motion.span>
-                        <motion.span variants={itemVariants}>0</motion.span>
-                    </div>
-                </motion.div>
-                {
-                    wordsFoundList.length !== 0 ? (
-                        <motion.div className="flex flex-col gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
-                            style={{
-                                backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
+                    <motion.div className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                        style={{ backdropFilter: 'blur(10px)' }}
+                    >
+                        <motion.img
+                            src={"/images/avatar/avatar_1.jpg"}
+                            alt="User Avatar"
+                            className="mb-4 w-32 h-32 rounded-full"
+                            initial={{ scale: 0 }}
+                            animate={{ rotate: 360, scale: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20
                             }}
-                            variants={containerVariants}
-                        >
-                            {wordsFoundList.map((word, index) => (
-                                <motion.div className="flex justify-around items-center"
-                                    key={index}
-                                    variants={itemVariants}
-                                >
-                                    <CircleCheckBig />
-                                    <span className="text-base">{word.value}</span>
-                                    <span className="text-base">{formatDate(word.date_create)}</span>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    ) : null
-                }
-            </motion.div>
+                        />
+                        <div className="flex flex-col gap-2 text-start w-full">
+                            <motion.h2 className="text-2xl font-bold flex items-center justify-between w-full"
+                                variants={itemVariants}
+                            >
+                                {user.pseudo}
+                                <Link to={`/users/${user.id}/edit`} className="opacity-50 hover:opacity-100 transition-opacity justify-between">
+                                    <motion.div
+                                        className="flex items-center gap-2 p-1 rounded hover:bg-gray-700 hover:opacity-75 cursor-pointer "
+                                        initial={{ scale: 0.95 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ type: 'spring', stiffness: 300 }}
+                                    >
+                                        <Pencil size={16} className="text-white" />
+                                        <span className="text-sm text-white">Modifier</span>
+                                    </motion.div>
+                                </Link>
+                            </motion.h2>
+                            <motion.span className="flex gap-4 items-center text-sm"
+                                variants={itemVariants}
+                            >
+                                <Award size={20} />
+                                Membre depuis le {formatDate(user.created_at)}
+                            </motion.span>
+                            {
+                                formatDate(user.birthday) && (
+                                    < motion.span className="flex gap-4 items-center text-sm"
+                                        variants={itemVariants}
+                                    >
+                                        <Cake size={20} />
+                                        Née le  {formatDate(user.birthday)}
+                                    </motion.span>
+                                )
+                            }
+                        </div>
+                    </motion.div>
+                    <motion.div className="flex justify-evenly gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                        variants={containerVariants}
+                    >
+                        <div className="flex flex-col items-center text-center opacity-80">
+                            <motion.span className="flex justify-center text-center gap-4"><SearchCheck size={20} />Mots trouvés </motion.span>
+                            <motion.span variants={itemVariants}>{wordsFoundList.length}</motion.span>
+                        </div>
+                        <div className="flex flex-col items-center text-center opacity-80">
+                            <motion.span className="flex justify-center text-center gap-4"><UsersRound size={20} />Amis</motion.span>
+                            <motion.span variants={itemVariants}>0</motion.span>
+                        </div>
+                    </motion.div>
+                    {
+                        wordsFoundList.length !== 0 ? (
+                            <motion.div className="flex flex-col gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                                style={{
+                                    backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
+                                }}
+                                variants={containerVariants}
+                            >
+                                {wordsFoundList.map((word, index) => (
+                                    <motion.div className="flex justify-around items-center"
+                                        key={index}
+                                        variants={itemVariants}
+                                    >
+                                        <CircleCheckBig />
+                                        <span className="text-base">{word.value}</span>
+                                        <span className="text-base">{formatDate(word.date_create)}</span>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        ) : null
+                    }
+                </motion.div>
+            </div>
         </LayoutPage >
     );
 }

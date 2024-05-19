@@ -47,7 +47,6 @@ export default function Login() {
 
     return (
         <LayoutPage user={user}>
-            {/* <div className="flex flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center"> */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -104,7 +103,6 @@ export default function Login() {
                     </Form>
                 </div>
             </motion.div>
-            {/* </div> */}
         </LayoutPage>
     );
 }

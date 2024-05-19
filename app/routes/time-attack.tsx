@@ -86,7 +86,6 @@ export default function TimeAttackGame() {
     return (
         <LayoutPage>
             {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} secretWord={secretWords[currentWordIndex]} />)}
-            {/* <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center"> */}
             <div className="flex flex-col items-center mt-4">
                 {/* Timer display */}
                 <div className="text-2xl font-bold bg-white p-2 rounded-md">
@@ -116,7 +115,6 @@ export default function TimeAttackGame() {
             <div className="my-8 p-4 border rounded-lg backdrop-filter backdrop-blur-sm">
                 <Keyboard onKeyPress={(key: any) => handleVirtualKeyPress(key, secretWords[currentWordIndex], inputRefs, inputs, setInputs)} />
             </div>
-            {/* </div> */}
         </LayoutPage>
     );
 }

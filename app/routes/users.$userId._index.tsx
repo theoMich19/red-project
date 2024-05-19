@@ -65,7 +65,6 @@ export default function Profile() {
 
     return (
         <LayoutPage user={user}>
-            {/* <div className="flex flex-col items-center overflow-x-hidden h-full bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center pt-24"> */}
             <motion.div className="flex flex-col items-center overflow-x-hidden h-full"
                 initial="hidden"
                 animate="visible"
@@ -155,7 +154,6 @@ export default function Profile() {
                     ) : null
                 }
             </motion.div>
-            {/* </div> */}
         </LayoutPage >
     );
 }

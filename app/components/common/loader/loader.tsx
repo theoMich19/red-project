@@ -32,7 +32,7 @@ const EnigmaticLoader = () => {
             animate="visible"
             exit="hidden"
         >
-            <div className="flex space-x-8 animate-wave">
+            <div className="flex max-md:flex-col max-md:space-y-4 max-md:animate-wave-col space-x-4 animate-wave">
                 {cards.map((card, index) => (
                     <motion.div
                         key={index}

@@ -77,6 +77,17 @@ body {
     transform: translateY(-150px);
   }
 }
+@media (max-width: 768px) {
+  @keyframes wave {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(150px);
+    }
+  }
+}
 
 .animate-wave > div {
   animation: wave 2s ease-in-out infinite;

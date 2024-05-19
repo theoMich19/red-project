@@ -85,37 +85,35 @@ export default function TimeAttackGame() {
 
     return (
         <LayoutPage>
-            {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} resetGame={() => { }} secretWord={secretWords[currentWordIndex]} />)}
-            <div className="flex flex-col items-center overflow-x-hidden h-full justify-between bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center">
-                <div className="flex flex-col items-center mt-4">
-                    {/* Timer display */}
-                    <div className="text-2xl font-bold bg-white p-2 rounded-md">
-                        {timeLeft}s</div>
-                    <PreviousAttempts allAttemps={allAttempts} secretWord={secretWords[currentWordIndex]} />
-                    {!gameStatus && (
-                        <div className="space-x-2 flex mt-2">
-                            {inputs.map((input, index) => (
-                                <input
-                                    key={index}
-                                    type="text"
-                                    className="w-14 h-14 text-center rounded-lg shadow-card bg-white"
-                                    style={{ fontFamily: "Oswald" }}
-                                    minLength={1}
-                                    maxLength={1}
-                                    value={input}
-                                    onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
-                                    onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs)}
-                                    ref={inputRefs[index]}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisi n'existe pas dans le dictionnaire</span>}
-                    <RemainingAttempts remainingAttempts={secretWords.length - currentWordIndex - 1} wordLength={secretWords[currentWordIndex].length} />
-                </div>
-                <div className="my-8 p-4 border rounded-lg backdrop-filter backdrop-blur-sm">
-                    <Keyboard onKeyPress={(key: any) => handleVirtualKeyPress(key, secretWords[currentWordIndex], inputRefs, inputs, setInputs)} />
-                </div>
+            {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} secretWord={secretWords[currentWordIndex]} />)}
+            <div className="flex flex-col items-center mt-4">
+                {/* Timer display */}
+                <div className="text-2xl font-bold bg-white p-2 rounded-md">
+                    {timeLeft}s</div>
+                <PreviousAttempts allAttemps={allAttempts} secretWord={secretWords[currentWordIndex]} />
+                {!gameStatus && (
+                    <div className="space-x-2 flex mt-2">
+                        {inputs.map((input, index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                className="w-14 h-14 text-center rounded-lg shadow-card bg-white"
+                                style={{ fontFamily: "Oswald" }}
+                                minLength={1}
+                                maxLength={1}
+                                value={input}
+                                onChange={(e) => handleInputChange(index, e.target.value, inputRefs, inputs, setInputs, setIsInvalidWord)}
+                                onKeyDown={(e) => handleKeyDown(index, e, inputRefs, inputs)}
+                                ref={inputRefs[index]}
+                            />
+                        ))}
+                    </div>
+                )}
+                {isInvalidWord && <span className="text-red-400 font-bold bg-white p-4 rounded-lg mt-4">Le mot saisi n'existe pas dans le dictionnaire</span>}
+                <RemainingAttempts remainingAttempts={secretWords.length - currentWordIndex - 1} wordLength={secretWords[currentWordIndex].length} />
+            </div>
+            <div className="my-8 p-4 border rounded-lg backdrop-filter backdrop-blur-sm">
+                <Keyboard onKeyPress={(key: any) => handleVirtualKeyPress(key, secretWords[currentWordIndex], inputRefs, inputs, setInputs)} />
             </div>
         </LayoutPage>
     );

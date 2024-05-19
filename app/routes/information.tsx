@@ -43,7 +43,7 @@ export default function Information() {
 
     return (
         <LayoutPage user={user}>
-            <div className="flex max-lg:flex-col items-center bg-[url('app/assets/images/bg/fond6.png')] bg-cover bg-center h-full justify-center gap-8 pt-16">
+            <div className="flex max-lg:flex-col items-center h-full justify-center gap-8 pt-16">
                 {cards.map(card =>
                     <motion.div
                         className="flex flex-col bg-white p-8 rounded-lg shadow-lg items-center gap-4 w-[40vw] h-[40vh] max-md:w-full"
@@ -57,9 +57,6 @@ export default function Information() {
                                 {card?.icon}
                                 <h1 className="text-2xl max-lg:text-sm font-bold">{card?.title}</h1>
                             </div>
-                            <button onClick={() => setSelectedId(null)} className="p-2">
-                                <X size={24} />
-                            </button>
                         </div>
                         <div className="flex flex-col items-start text-xl">
                             <span className="text-lg max-md:text-sm overflow-auto">{card?.content}</span>

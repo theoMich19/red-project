@@ -47,7 +47,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {loading && <EnigmaticLoader />}
+        {!loading && <EnigmaticLoader />}
         <Analytics />
         <SpeedInsights />
         <Outlet />

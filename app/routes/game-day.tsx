@@ -67,7 +67,7 @@ export default function GameDay() {
 
   return (
     <LayoutPage user={user}>
-      <div className="flex flex-col h-full items-center justify-center ">
+      <div className="flex flex-col h-full items-center ">
         {isOpen && (<ModalGame setIsOpen={setIsOpen} gameStatus={gameStatus} secretWord={secretWord} />)}
         {status ?
           (
@@ -79,7 +79,7 @@ export default function GameDay() {
               isRestAvaliable={false} />
           ) :
           (
-            <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px]">
+            <div className="min-w-[300px] min-h-[300px] md:min-w-[400px] md:min-h-[400px] pt-[20vh]">
               <div className="w-full h-full p-8 backdrop-filter backdrop-blur-lg rounded-lg flex flex-col items-center justify-evenly text-white gap-4 md:text-base text-sm">
                 <div className="flex flex-col">
                   {
@@ -97,7 +97,6 @@ export default function GameDay() {
                   }
 
                 </div>
-
                 <Link to={'/game-mod'}>
                   <span className="mt-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 text-sm rounded">Jouer à un autre mode</span>
                 </Link>

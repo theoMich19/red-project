@@ -24,7 +24,7 @@ export default function Information() {
             id: 'information',
             icon: <BadgeInfo />,
             title: 'Information',
-            content: "C'est un jeu captivant où l'objectif est de dévoiler un mot mystérieusement dissimulé. Pour ce faire, le joueur doit soumettre un mot de même longueur. Attention le nombre d'essaie est limité.\n\nPlongez dans cette aventure ludique où la déduction et la perspicacité vous mèneront à la découverte du mot énigmatique.",
+            content: "C'est un jeu captivant où l'objectif est de dévoiler un mot mystérieusement dissimulé. Pour ce faire, le joueur doit soumettre un mot de même longueur. Attention, le nombre d'essais est limité.\n\nPlongez dans cette aventure ludique où la déduction et la perspicacité vous mèneront à la découverte du mot énigmatique.",
         },
         {
             id: 'how-to-play',

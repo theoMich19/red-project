@@ -68,6 +68,12 @@ body {
   opacity: 1;
 }
 
+.dateInput::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* ANIMATATION */
+
 @keyframes wave {
   0%,
   100% {
@@ -93,8 +99,18 @@ body {
   animation: wave 2s ease-in-out infinite;
 }
 
-.dateInput::-webkit-calendar-picker-indicator {
-  display: none;
+@keyframes pulsate {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.animate-pulsate {
+  animation: pulsate 1.5s ease-in-out infinite;
 }
 
 @keyframes spin {
@@ -108,4 +124,17 @@ body {
 
 .spinLoaderBtn {
   animation: spin 1s linear infinite;
+}
+
+.animation-logo {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

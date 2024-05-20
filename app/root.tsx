@@ -20,6 +20,7 @@ import { SpeedInsights } from "@vercel/speed-insights/remix"
 import EnigmaticLoader from "./components/common/loader/loader";
 import { useState } from "react";
 import ErrorComponent from "./components/common/error/error";
+import type { MetaFunction, LoaderFunction } from "@remix-run/node";
 
 
 export const links: LinksFunction = () => [
@@ -31,6 +32,13 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "New Remix App" },
+    { name: "description", content: "Welcome to Remix!" },
+  ];
+};
+
 
 export default function App() {
   const navigation = useNavigation();
@@ -38,7 +46,7 @@ export default function App() {
 
 
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

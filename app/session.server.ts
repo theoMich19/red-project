@@ -75,10 +75,10 @@ export async function getUser(request: Request) {
 
 export async function getUserId(request: Request) {
   const user = await getUser(request);
-  if (user.id) {
+  if (user?.id) {
     return user.id;
   }
-
+  console.log("cfvhgjbk");
   throw await logout(request);
 }
 

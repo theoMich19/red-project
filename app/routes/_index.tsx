@@ -1,9 +1,21 @@
-import { Link } from "@remix-run/react";
+import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { BookOpenCheck, CheckSquare, Clock, X } from "lucide-react";
 import LayoutPage from "~/components/common/pageLayout";
+import { getSession, getUser, getUserId } from "~/session.server";
+import { User } from "~/ts/user";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request)
+
+  return { user }
+};
+
+
 
 export default function Index() {
+  const { user }: { user: User } = useLoaderData()
 
   const card = {
     id: 'how-to-play',
@@ -17,18 +29,13 @@ export default function Index() {
     ]
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.1 } }
-  };
-
   const cardVariants = {
     hidden: { scale: 0 },
     visible: { scale: 1, transition: { type: 'spring', stiffness: 260, damping: 20 } }
   };
 
   return (
-    <LayoutPage >
+    <LayoutPage user={user}>
       <div className="flex h-full w-full gap-4 max-lg:flex-col justify-center items-center">
 
         <motion.video

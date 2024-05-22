@@ -1,7 +1,8 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { Form, Link, useFetcher, useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
+import { Form, Link, useActionData, useFetcher, useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { Award, Cake, CircleCheckBig, LoaderCircle, Pencil, SearchCheck, Trash2, UsersRound } from "lucide-react";
+import { useEffect, useRef } from "react";
 import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUserId } from "~/session.server";
 import { Friend } from "~/ts/friend";
@@ -74,9 +75,18 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function ProfileFriends() {
     const { user, confirmedFriendsList, pendingFriendsList }: useLoaderDataType = useLoaderData();
     const navigation = useNavigation();
+    const dataAction = useActionData()
     const loading = navigation.state === "idle" ? false : true;
     const fetcherFriend = useFetcher()
+    const inputRef = useRef(null);
 
+    useEffect(() => {
+        // console.log(dataAction)
+        // if (dataAction?.id) { 
+        //     inputRef.current.value = ''; 
+
+        // }
+    }, [dataAction])
 
     const containerVariants = {
         hidden: { opacity: 0, x: -100 },
@@ -168,6 +178,12 @@ export default function ProfileFriends() {
                                     </motion.span>
                                 )
                             }
+                            <motion.span className="flex gap-4 items-center text-sm italic"
+                                variants={itemVariants}
+                            >
+                                <Hash size={20} />
+                                {user.friend_code}
+                            </motion.span>
                         </div>
                     </motion.div>
                     <motion.div
@@ -195,12 +211,13 @@ export default function ProfileFriends() {
                                 placeholder="Email ou Code Ami"
                                 className="w-full bg-white opacity-75 border-none text-gray-600 rounded p-2"
                                 required
+                                ref={inputRef}
                             />
                             <button type="submit" disabled={loading} className="text-white font-bold border-secondary border-2 hover:bg-secondary hover:bg-opacity-80 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary rounded-lg text-lg p-2 text-center transition-colors duration-300 ease-in-out">
                                 {
                                     loading
                                         ? <span className="flex gap-2 items-center justify-center">
-                                            <LoaderCircle className="spinLoaderBtn" />Ajoute ...
+                                            <LoaderCircle className="spinLoaderBtn" />Ajout ...
                                         </span>
                                         : "Ajouter"
                                 }

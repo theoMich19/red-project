@@ -92,7 +92,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                         exit="closed"
                                     >
                                         <Link to={`/users/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profil</Link>
-                                        <Link to={`/users/${user.id}/friends`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Amis</Link>
+                                        {/* <Link to={`/users/${user.id}/friends`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Amis</Link> */}
                                         <Form action="/logout" method="post" className="w-full">
                                             <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
                                         </Form>
@@ -131,7 +131,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                                 exit="closed"
                                             >
                                                 <Link to={`/users/${user.id}`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mon Profile</Link>
-                                                <Link to={`/users/${user.id}/friends`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mes Amis</Link>
+                                                {/* <Link to={`/users/${user.id}/friends`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mes Amis</Link> */}
                                                 <Form action="/logout" method="post" className="w-full">
                                                     <button type="submit" className="w-full px-4 py-2 text-base  hover:bg-gray-100">Déconnexion</button>
                                                 </Form>

@@ -78,7 +78,6 @@ export async function getUserId(request: Request) {
   if (user?.id) {
     return user.id;
   }
-  console.log("cfvhgjbk");
   throw await logout(request);
 }
 

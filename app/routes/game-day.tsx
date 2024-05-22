@@ -45,10 +45,11 @@ export default function GameDay() {
   const [gameStatus, setGameStatus] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const fetcherWordFind = useFetcher()
+
   const handChageGameStatus = async (status: string) => {
     setGameStatus(status)
 
-    if (status === "won") {
+    if (status === "won" && user) {
       const formData = new FormData()
       formData.append("user_id", user.id.toString())
       formData.append("word_id", dataSecretWord.id.toString())
@@ -60,7 +61,11 @@ export default function GameDay() {
     }
   }
 
-  const secretWord = dataSecretWord.value.toUpperCase()
+  const normalizeSecretWord = (word: string) => {
+    return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+  };
+
+  const secretWord = normalizeSecretWord(dataSecretWord.value);
   const errorSecretWord = !secretWord ? "Une erreur est survenue, revenez plus tard !" : ""
   const status = !gameStatus && !isWordFound && secretWord
 

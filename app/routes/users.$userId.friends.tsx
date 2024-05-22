@@ -250,8 +250,7 @@ export default function ProfileFriends() {
                                             />
                                             <div className="flex flex-col">
                                                 <span className="text-lg font-bold">{friend.user.pseudo}</span>
-                                                {/* <span className="text-sm">{friend.user.friend_code}</span> */}
-                                                <span className="text-sm italic">#7854polm</span>
+                                                <span className="text-sm">{friend.user.friend_code}</span>
                                             </div>
                                         </div>
                                         <span>Amis depuis {formatDate(friend.updated_at)}</span>

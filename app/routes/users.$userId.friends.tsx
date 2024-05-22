@@ -180,7 +180,6 @@ export default function ProfileFriends() {
                             <motion.span className="flex gap-4 items-center text-sm italic"
                                 variants={itemVariants}
                             >
-                                <Hash size={20} />
                                 {user.friend_code}
                             </motion.span>
                         </div>

@@ -35,13 +35,21 @@ export default function GameBoard({ dicoUsed, secretWord, isRestAvaliable = fals
 
     useEffect(() => {
         if (inputs.every((input) => input !== " " && input !== "")) {
-            const wordsAttemp = inputs.join("")
 
+            const wordsAttemp = inputs.join("")
             if (!dicoUsed.includes(wordsAttemp.toLowerCase())) {
                 setIsInvalidWord(true);
                 sendToast({ type: "error", message: "Le mot n'existe pas", duration: 2000 });
                 return;
             }
+
+            const isAlreadyUsed = allAttemps.some(attempt => attempt.join('') === wordsAttemp.toLocaleUpperCase());
+            if (isAlreadyUsed) {
+                sendToast({ type: "error", message: "Vous avez déjà essayé ce mot", duration: 2000 });
+                setInputs(Array(secretWord.length).fill(""));
+                return;
+            }
+
 
             setAllAttemps((prevAllAttemps) => [...prevAllAttemps, [...inputs]]);
             setInputs(Array(secretWord.length).fill(""));

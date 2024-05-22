@@ -244,7 +244,7 @@ export default function ProfileFriends() {
                                                 <span className="text-sm italic">#7854polm</span>
                                             </div>
                                         </div>
-                                        <span>Amis depuis {formatDate(friend.user.updated_at)}</span>
+                                        <span>Amis depuis {formatDate(friend.updated_at)}</span>
                                         <button onClick={() => deleteFriend(friend.id)} title="Supprimer l'ami">
                                             <Trash2 size={24} color="white" />
                                         </button>

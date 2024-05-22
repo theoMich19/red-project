@@ -72,7 +72,7 @@ export default function LeaderBord() {
     const sortedDataList = [confirmedFriendsWithWords.user, ...confirmedFriendsWithWords.friends].sort((a, b) => b.words_count - a.words_count);
 
     return (
-        <LayoutPage>
+        <LayoutPage user={user}>
             <div className="flex flex-col h-full items-center justify-center ">
                 <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh] max-md:w-full min-w-[50vw]"
                     initial="hidden"

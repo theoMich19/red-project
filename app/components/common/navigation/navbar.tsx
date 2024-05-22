@@ -92,6 +92,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                                         exit="closed"
                                     >
                                         <Link to={`/users/${user.id}`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mon Profil</Link>
+                                        <Link to={`/users/${user.id}/friends`} className="block px-4 py-2 text-sm hover:bg-gray-100">Mes Amis</Link>
                                         <Form action="/logout" method="post" className="w-full">
                                             <button type="submit" className="w-full px-4 py-2 text-sm hover:bg-gray-100 text-start">Déconnexion</button>
                                         </Form>
@@ -123,13 +124,14 @@ const Navbar = ({ user }: { user: User | null }) => {
                                     <AnimatePresence>
                                         {isProfileOpen && (
                                             <motion.div
-                                                className="w-full mt-2 py-2 bg-white text-black"
+                                                className="flex flex-col w-full mt-2 py-2 bg-white text-black"
                                                 variants={dropdownVariants}
                                                 initial="closed"
                                                 animate="open"
                                                 exit="closed"
                                             >
                                                 <Link to={`/users/${user.id}`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mon Profile</Link>
+                                                <Link to={`/users/${user.id}/friends`} className="w-full px-4 py-2 text-base  hover:bg-gray-100">Mes Amis</Link>
                                                 <Form action="/logout" method="post" className="w-full">
                                                     <button type="submit" className="w-full px-4 py-2 text-base  hover:bg-gray-100">Déconnexion</button>
                                                 </Form>

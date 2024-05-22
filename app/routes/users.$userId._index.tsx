@@ -1,13 +1,14 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { motion } from "framer-motion";
-import { Award, Cake, CircleCheckBig, Pencil, SearchCheck, UsersRound } from "lucide-react";
+import { Award, Cake, CircleCheckBig, Hash, Pencil, SearchCheck, UsersRound } from "lucide-react";
 import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUserId } from "~/session.server";
+import { Friend } from "~/ts/friend";
 import { User } from "~/ts/user";
 import { formatDate } from "~/utils/date";
 
-interface useLoaderDataType { user: User, wordsFoundList: Array<Word> }
+interface useLoaderDataType { user: User, wordsFoundList: Array<Word>, confirmedFriendsList: Array<Friend> }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const session = await getSession(request)
@@ -36,11 +37,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     })
     const wordsFoundList = await apiWordsFind.json()
 
-    return { user, wordsFoundList }
+    const apiConfirmedFriends = await fetch(`${process.env.REST_URL_API}/friends/confirmed`, {
+        method: "get",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`
+        },
+    })
+    const confirmedFriendsList = await apiConfirmedFriends.json()
+
+    return { user, wordsFoundList, confirmedFriendsList }
 }
 
 export default function Profile() {
-    const { user, wordsFoundList }: useLoaderDataType = useLoaderData()
+    const { user, wordsFoundList, confirmedFriendsList }: useLoaderDataType = useLoaderData()
 
     const containerVariants = {
         hidden: { opacity: 0, x: -100 },
@@ -119,6 +129,12 @@ export default function Profile() {
                                     </motion.span>
                                 )
                             }
+                            <motion.span className="flex gap-4 items-center text-sm italic"
+                                variants={itemVariants}
+                            >
+                                <Hash size={20} />
+                                {user.friend_code}
+                            </motion.span>
                         </div>
                     </motion.div>
                     <motion.div className="flex justify-evenly gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
@@ -130,7 +146,7 @@ export default function Profile() {
                         </div>
                         <div className="flex flex-col items-center text-center opacity-80">
                             <motion.span className="flex justify-center text-center gap-4"><UsersRound size={20} />Amis</motion.span>
-                            <motion.span variants={itemVariants}>0</motion.span>
+                            <motion.span variants={itemVariants}>{confirmedFriendsList.length}</motion.span>
                         </div>
                     </motion.div>
                     {

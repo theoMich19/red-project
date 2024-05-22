@@ -3,6 +3,7 @@ export interface Friend {
   user: {
     id: number;
     pseudo: string;
+    friend_code: string;
     created_at: string;
     updated_at: string;
   };

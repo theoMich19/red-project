@@ -77,7 +77,8 @@ export default function ProfileFriends() {
     const navigation = useNavigation();
     const dataAction = useActionData()
     const loading = navigation.state === "idle" ? false : true;
-    const fetcherFriend = useFetcher()
+    const fetcherFriendDelete = useFetcher()
+    const fetcherFriendAccept = useFetcher()
     const inputRef = useRef(null);
 
     // useEffect(() => {
@@ -108,15 +109,21 @@ export default function ProfileFriends() {
     };
 
     const deleteFriend = async (friendId: number) => {
-        fetcherFriend.submit({
-            method: "delete",
+        const formData = new FormData()
+        formData.append("_method", "delete");
+
+        fetcherFriendDelete.submit(formData, {
+            method: "post",
             action: `/api/friends/delete/${friendId}`
         })
     }
 
     const acceptFriend = async (friendId: number) => {
-        fetcherFriend.submit({
-            method: "patch",
+        const formData = new FormData()
+        formData.append("_method", "patch");
+
+        fetcherFriendAccept.submit(formData, {
+            method: "post",
             action: `/api/friends/accept/${friendId}`
         })
     }
@@ -129,63 +136,8 @@ export default function ProfileFriends() {
                     animate="visible"
                     variants={containerVariants}
                 >
-                    <motion.div className="flex max-md:flex-col max-md:items-center min-w-[50vw] w-full text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
-                        style={{ backdropFilter: 'blur(10px)' }}
-                    >
-                        <motion.img
-                            src={"/images/avatar/avatar_1.jpg"}
-                            alt="User Avatar"
-                            className="mb-4 w-32 h-32 rounded-full"
-                            initial={{ scale: 0 }}
-                            animate={{ rotate: 360, scale: 1 }}
-                            transition={{
-                                type: 'spring',
-                                stiffness: 260,
-                                damping: 20
-                            }}
-                        />
-                        <div className="flex flex-col gap-2 text-start w-full">
-                            <motion.h2 className="text-2xl font-bold flex items-center justify-between w-full"
-                                variants={itemVariants}
-                            >
-                                {user.pseudo}
-                                <Link to={`/users/${user.id}/edit`} className="opacity-50 hover:opacity-100 transition-opacity justify-between">
-                                    <motion.div
-                                        className="flex items-center gap-2 p-1 rounded hover:bg-gray-700 hover:opacity-75 cursor-pointer "
-                                        initial={{ scale: 0.95 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        transition={{ type: 'spring', stiffness: 300 }}
-                                    >
-                                        <Pencil size={16} className="text-white" />
-                                        <span className="text-sm text-white">Modifier</span>
-                                    </motion.div>
-                                </Link>
-                            </motion.h2>
-                            <motion.span className="flex gap-4 items-center text-sm"
-                                variants={itemVariants}
-                            >
-                                <Award size={20} />
-                                Membre depuis le {formatDate(user.created_at)}
-                            </motion.span>
-                            {
-                                formatDate(user.birthday) && (
-                                    < motion.span className="flex gap-4 items-center text-sm"
-                                        variants={itemVariants}
-                                    >
-                                        <Cake size={20} />
-                                        Née le  {formatDate(user.birthday)}
-                                    </motion.span>
-                                )
-                            }
-                            <motion.span className="flex gap-4 items-center text-sm italic"
-                                variants={itemVariants}
-                            >
-                                {user.friend_code}
-                            </motion.span>
-                        </div>
-                    </motion.div>
                     <motion.div
-                        className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500 justify-between items-center"
+                        className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500 justify-between items-center w-full"
                         style={{ backdropFilter: 'blur(10px)' }}
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -197,9 +149,10 @@ export default function ProfileFriends() {
                             >
                                 Ajouter un ami
                             </motion.h6>
-                            <motion.span className="text-sm italic" variants={itemVariants}>
-                                Vous pouvez saisir son code ou son email
-                            </motion.span>
+                            <motion.div className="flex flex-col text-sm italic" variants={itemVariants}>
+                                <motion.span>Vous pouvez saisir son code ou son email</motion.span>
+                                <motion.span>Votre code : {user.friend_code}</motion.span>
+                            </motion.div>
                         </div>
                         <Form method="post" className="flex max-md:flex-col gap-4 ">
                             <input
@@ -215,7 +168,7 @@ export default function ProfileFriends() {
                                 {
                                     loading
                                         ? <span className="flex gap-2 items-center justify-center">
-                                            <LoaderCircle className="spinLoaderBtn" />Ajout ...
+                                            <LoaderCircle className="spinLoaderBtn" />
                                         </span>
                                         : "Ajouter"
                                 }
@@ -224,12 +177,52 @@ export default function ProfileFriends() {
                         </Form>
                     </motion.div>
                     {
+                        pendingFriendsList.length !== 0 && (
+                            <motion.div className="flex flex-col gap-4 w-full rounded-lg shadow-xl bg-gradient-to-r from-pink-500 to-pink-800"
+                                variants={containerVariants}
+                            >
+                                {pendingFriendsList.map((friend) => (
+                                    <motion.div key={friend.id} className="text-white flex items-center py-3 px-6 justify-between w-full "
+                                        variants={itemVariants}
+                                    >
+                                        <div className="flex gap-4">
+                                            <motion.img
+                                                src={"/images/avatar/avatar_1.jpg"}
+                                                alt="User Avatar"
+                                                className="w-12 h-12 rounded-full"
+                                                initial={{ scale: 0 }}
+                                                animate={{ rotate: 360, scale: 1 }}
+                                                transition={{
+                                                    type: 'spring',
+                                                    stiffness: 260,
+                                                    damping: 20
+                                                }}
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="text-lg font-bold">{friend.user.pseudo}</span>
+                                                <span className="text-sm">{friend.user.friend_code}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-4">
+                                            <button onClick={() => acceptFriend(friend.id)} title="Accepter l'ami">
+                                                <CircleCheckBig size={24} color="white" />
+                                            </button>
+                                            <button onClick={() => deleteFriend(friend.id)} title="Supprimer l'ami">
+                                                <Trash2 size={24} color="white" />
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        )
+                    }
+                    {
                         confirmedFriendsList.length !== 0 && (
-                            <motion.div className="flex flex-col gap-4 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500 rounded-lg shadow-xl p-3 w-full"
+                            <motion.div className="flex flex-col gap-4 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500 rounded-lg shadow-xl w-full"
                                 variants={containerVariants}
                             >
                                 {confirmedFriendsList.map((friend: Friend) => (
-                                    <motion.div key={friend.id} className="text-white flex items-center space-x-4 justify-evenly"
+                                    <motion.div key={friend.id} className="text-white flex items-center py-2 px-6 justify-between"
                                         variants={itemVariants}
                                     >
                                         <div className="flex gap-4">
@@ -255,36 +248,6 @@ export default function ProfileFriends() {
                                         <button onClick={() => deleteFriend(friend.id)} title="Supprimer l'ami">
                                             <Trash2 size={24} color="white" />
                                         </button>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-                        )
-                    }
-
-                    {
-                        pendingFriendsList.length !== 0 && (
-                            <motion.div className="grid grid-cols-3 gap-4 w-full p-4"
-                                variants={containerVariants}
-                            >
-                                {pendingFriendsList.map((friend) => (
-                                    <motion.div key={friend.id} className="text-white rounded-lg shadow-xl bg-gradient-to-r from-pink-500 to-pink-800 p-3 flex items-center space-x-4"
-                                        variants={itemVariants}
-                                    >
-                                        <img
-                                            src={`/images/friends/${friend.user.id}.jpg`} // Chemin d'image hypothétique
-                                            alt={friend.user.pseudo}
-                                            className="w-16 h-16 rounded-full"
-                                        />
-                                        <div>
-                                            <div className="text-lg font-bold">{friend.user.pseudo}</div>
-                                            {/* <div className="text-sm">{friend.user.friend_code}</div> */}
-                                            <button onClick={() => acceptFriend(friend.id)} title="Accepter l'ami">
-                                                <CircleCheckBig size={24} color="white" />
-                                            </button>
-                                            <button onClick={() => deleteFriend(friend.id)} title="Supprimer l'ami">
-                                                <Trash2 size={24} color="white" />
-                                            </button>
-                                        </div>
                                     </motion.div>
                                 ))}
                             </motion.div>

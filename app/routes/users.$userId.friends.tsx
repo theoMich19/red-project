@@ -181,6 +181,11 @@ export default function ProfileFriends() {
                             <motion.div className="flex flex-col gap-4 w-full rounded-lg shadow-xl bg-gradient-to-r from-pink-500 to-pink-800"
                                 variants={containerVariants}
                             >
+                                <motion.h6 className="text-xl text-white font-bold flex items-center justify-between w-full p-2"
+                                    variants={itemVariants}
+                                >
+                                    Demande d'amis en attente
+                                </motion.h6>
                                 {pendingFriendsList.map((friend) => (
                                     <motion.div key={friend.id} className="text-white flex items-center py-3 px-6 justify-between w-full "
                                         variants={itemVariants}
@@ -221,6 +226,11 @@ export default function ProfileFriends() {
                             <motion.div className="flex flex-col gap-4 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500 rounded-lg shadow-xl w-full"
                                 variants={containerVariants}
                             >
+                                <motion.h6 className="text-xl font-bold flex items-center justify-between w-full text-white p-2"
+                                    variants={itemVariants}
+                                >
+                                    Mes amis
+                                </motion.h6>
                                 {confirmedFriendsList.map((friend: Friend) => (
                                     <motion.div key={friend.id} className="text-white flex items-center py-2 px-6 justify-between"
                                         variants={itemVariants}

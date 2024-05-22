@@ -6,8 +6,8 @@ export async function action({ request, params }: ActionFunctionArgs) {
     const token = await session.get("token")
 
     const formData = await request.formData()
-    const response = await fetch(`${process.env.REST_URL_API}/friends/accept/${params.friend_id}`, {
-        method: "PATCH",
+    const response = await fetch(`${process.env.REST_URL_API}/friends/delete/${params.id}`, {
+        method: "DELETE",
         headers: {
             Accept: "application/json",
             Authorization: `Bearer ${token}`

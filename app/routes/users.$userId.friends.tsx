@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useFetcher, useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import { motion } from "framer-motion";
-import { Award, Cake, CircleCheckBig, Hash, LoaderCircle, Pencil, SearchCheck, Trash2, UsersRound } from "lucide-react";
+import { Award, Cake, CircleCheckBig, LoaderCircle, Pencil, SearchCheck, Trash2, UsersRound } from "lucide-react";
 import { useEffect, useRef } from "react";
 import LayoutPage from "~/components/common/pageLayout";
 import { getSession, getUserId } from "~/session.server";

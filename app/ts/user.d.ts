@@ -7,4 +7,5 @@ export interface User {
   birthday: string;
   created_at: string;
   updated_at: string;
+  friend_code: string;
 }

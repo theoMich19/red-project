@@ -190,6 +190,8 @@ export default function ProfileFriends() {
                         <Form method="post" className="flex max-md:flex-col gap-4 ">
                             <input
                                 type="text"
+                                id="identifier"
+                                name="identifier"
                                 placeholder="Email ou Code Ami"
                                 className="w-full bg-white opacity-75 border-none text-gray-600 rounded p-2"
                                 required

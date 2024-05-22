@@ -131,7 +131,7 @@ export default function ProfileFriends() {
     return (
         <LayoutPage user={user}>
             <div className="flex flex-col h-full items-center justify-center ">
-                <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh] gap-4"
+                <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh] gap-4 max-md:w-full"
                     initial="hidden"
                     animate="visible"
                     variants={containerVariants}
@@ -232,7 +232,7 @@ export default function ProfileFriends() {
                                     Mes amis
                                 </motion.h6>
                                 {confirmedFriendsList.map((friend: Friend) => (
-                                    <motion.div key={friend.id} className="text-white flex items-center py-2 px-6 justify-between"
+                                    <motion.div key={friend.id} className="text-white flex items-center py-2 px-6 justify-between w-full"
                                         variants={itemVariants}
                                     >
                                         <div className="flex gap-4">
@@ -250,11 +250,10 @@ export default function ProfileFriends() {
                                             />
                                             <div className="flex flex-col">
                                                 <span className="text-lg font-bold">{friend.user.pseudo}</span>
-                                                {/* <span className="text-sm">{friend.user.friend_code}</span> */}
-                                                <span className="text-sm italic">#7854polm</span>
+                                                <span className="text-sm">{friend.user.friend_code}</span>
                                             </div>
                                         </div>
-                                        <span>Amis depuis {formatDate(friend.updated_at)}</span>
+                                        <span className="max-md:hidden">Amis depuis {formatDate(friend.updated_at)}</span>
                                         <button onClick={() => deleteFriend(friend.id)} title="Supprimer l'ami">
                                             <Trash2 size={24} color="white" />
                                         </button>

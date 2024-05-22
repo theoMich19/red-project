@@ -76,12 +76,12 @@ export default function Profile() {
     return (
         <LayoutPage user={user}>
             <div className="flex flex-col h-full items-center justify-center ">
-                <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh]"
+                <motion.div className="flex flex-col items-center overflow-x-hidden h-full pt-[10vh] max-md:w-full"
                     initial="hidden"
                     animate="visible"
                     variants={containerVariants}
                 >
-                    <motion.div className="flex max-md:flex-col max-md:items-center min-w-[50vw] text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                    <motion.div className="flex max-md:flex-col max-md:items-center min-w-[50vw] max-md:w-full text-white rounded-lg p-8 shadow-xl gap-8 bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
                         style={{ backdropFilter: 'blur(10px)' }}
                     >
                         <motion.img
@@ -137,7 +137,7 @@ export default function Profile() {
                             </motion.span>
                         </div>
                     </motion.div>
-                    <motion.div className="flex justify-evenly gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                    <motion.div className="flex justify-evenly gap-5 w-full  min-w-[50vw] text-white rounded-lg p-4 mt-4 bg-opacity-20 bg-white border border-gray-200 shadow  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
                         variants={containerVariants}
                     >
                         <div className="flex flex-col items-center text-center opacity-80">
@@ -151,7 +151,7 @@ export default function Profile() {
                     </motion.div>
                     {
                         wordsFoundList.length !== 0 ? (
-                            <motion.div className="flex flex-col gap-5 w-full min:lgmax-w-[80vw] min-w-[50vw] text-white rounded-lg p-4 mt-4  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
+                            <motion.div className="flex flex-col gap-5 w-full min-w-[50vw] text-white rounded-lg p-4 mt-4  bg-gradient-to-r from-teal-300 via-teal-500 to-green-500"
                                 style={{
                                     backgroundImage: 'radial-gradient(circle at center, #4F5E3C 0%, #2B3F38 50%, #080D11 100%)'
                                 }}
